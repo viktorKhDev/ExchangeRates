@@ -6,14 +6,7 @@
     android:layout_height="match_parent"
     tools:context=".MainActivity">
 
-    <android.support.v7.widget.Toolbar
-        app:layout_constraintTop_toTopOf="parent"
-        android:layout_width="match_parent"
-        android:layout_height="60dp"
-        android:id="@+id/toolbar"
-        android:background="@color/colorPrimary"
-        >
-    </android.support.v7.widget.Toolbar>
+
 
     <TextView
         android:id="@+id/text_course"
@@ -23,7 +16,7 @@
         android:text="@string/course_on"
         android:textSize="20sp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/toolbar" />
+        app:layout_constraintTop_toTopOf="parent"/>
 
     <TextView
         android:id="@+id/text_date"
@@ -34,7 +27,7 @@
         android:textSize="20sp"
         android:inputType="date"
         app:layout_constraintStart_toEndOf="@+id/text_course"
-        app:layout_constraintTop_toBottomOf="@id/toolbar" />
+        app:layout_constraintTop_toTopOf="parent" />
 
     <android.support.v7.widget.RecyclerView
         android:layout_width="match_parent"
