@@ -2,6 +2,7 @@ package com.viktor.kh.dev.exchangerates
 
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
+import com.viktor.kh.dev.exchangerates.data.CurrencyPojo
 import com.viktor.kh.dev.exchangerates.di.App
 import com.viktor.kh.dev.exchangerates.presenters.MainPresenter
 import com.viktor.kh.dev.exchangerates.presenters.MainView
@@ -20,9 +21,18 @@ class MainActivity  :  MainView, AppCompatActivity() {
         mainPresenter.init(this)
     }
 
-    override fun getCourses() {
+
+
+
+
+
+
+    override fun getCourses(list: ArrayList<CurrencyPojo>) {
 
     }
+
+
+
 
 
 }
