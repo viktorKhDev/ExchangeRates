@@ -4,5 +4,5 @@ import com.viktor.kh.dev.exchangerates.data.CurrencyPojo
 
 interface MainView {
 
-    fun getCourses(list: ArrayList<CurrencyPojo>)
+    fun setCourses(list: ArrayList<CurrencyPojo>)
 }

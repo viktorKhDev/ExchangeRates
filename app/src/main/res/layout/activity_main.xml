@@ -4,7 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MainActivity">
+    tools:context=".MainActivity"
+    android:background="@color/colorAccent">
 
 
 
@@ -12,27 +13,33 @@
         android:id="@+id/text_course"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_margin="10dp"
+        android:gravity="center"
+        android:layout_marginStart="5dp"
         android:text="@string/course_on"
+        android:textColor="@color/colorWhite"
         android:textSize="20sp"
+        android:layout_marginTop="2dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"/>
 
     <TextView
         android:id="@+id/text_date"
+        android:textColor="@color/colorWhite"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_margin="10dp"
-        android:text="2423.2351.32"
+        android:layout_marginTop="2dp"
+        android:layout_marginStart="5dp"
+        android:gravity="center"
         android:textSize="20sp"
         android:inputType="date"
         app:layout_constraintStart_toEndOf="@+id/text_course"
         app:layout_constraintTop_toTopOf="parent" />
 
     <android.support.v7.widget.RecyclerView
+        android:background="@color/colorAccent"
+        android:id="@+id/main_list"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_margin="10dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintTop_toBottomOf="@id/text_date"
         tools:layout_editor_absoluteX="10dp" />
