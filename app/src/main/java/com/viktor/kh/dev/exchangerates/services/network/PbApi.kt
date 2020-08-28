@@ -4,8 +4,8 @@ import com.viktor.kh.dev.exchangerates.data.CurrencyPojo
 import retrofit2.Call
 import retrofit2.http.GET
 
-interface NbuApi {
+interface PbApi {
 
-    @GET("NBUStatService/v1/statdirectory/exchange?json")
-    fun  getPosts(): Call<List<CurrencyPojo>>
+    @GET("date=01.12.2019")
+    fun  getPosts(): Call<CurrencyPojo>
 }

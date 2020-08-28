@@ -21,47 +21,71 @@
     android:layout_height="wrap_content"
     android:background="@color/colorPrimary">
     <TextView
-        android:id="@+id/currency_name"
+        android:id="@+id/base_currency"
         android:layout_width="0dp"
         android:layout_height="50dp"
         android:text="TextView"
         android:textColor="@color/colorWhite"
         android:gravity="center"
-        app:layout_constraintEnd_toStartOf="@+id/rate"
+        app:layout_constraintEnd_toStartOf="@+id/currency"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
-        android:id="@+id/rate"
+        android:id="@+id/currency"
         android:layout_width="0dp"
         android:layout_height="50dp"
         android:text="TextView"
         android:textColor="@color/colorWhite"
         android:gravity="center"
-        app:layout_constraintEnd_toStartOf="@+id/cc"
-        app:layout_constraintStart_toEndOf="@+id/currency_name"
+        app:layout_constraintEnd_toStartOf="@+id/sale_rate_nb"
+        app:layout_constraintStart_toEndOf="@+id/base_currency"
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
-        android:id="@+id/cc"
+        android:id="@+id/sale_rate_nb"
         android:layout_width="0dp"
         android:layout_height="50dp"
         android:text="TextView"
         android:textColor="@color/colorWhite"
         android:gravity="center"
-        app:layout_constraintEnd_toStartOf="@+id/exchange_date"
-        app:layout_constraintStart_toEndOf="@+id/rate"
+        app:layout_constraintEnd_toStartOf="@+id/purchase_rate_nb"
+        app:layout_constraintStart_toEndOf="@+id/currency"
+        app:layout_constraintTop_toTopOf="parent" />
+
+
+      <TextView
+       android:id="@+id/purchase_rate_nb"
+       android:layout_width="0dp"
+       android:layout_height="50dp"
+       android:text="TextView"
+       android:textColor="@color/colorWhite"
+       android:gravity="center"
+       app:layout_constraintEnd_toStartOf="@id/sale_rate"
+       app:layout_constraintStart_toEndOf="@+id/sale_rate_nb"
+       app:layout_constraintTop_toTopOf="parent" />
+
+
+    <TextView
+        android:id="@+id/sale_rate"
+        android:layout_width="0dp"
+        android:layout_height="50dp"
+        android:text="TextView"
+        android:textColor="@color/colorWhite"
+        android:gravity="center"
+        app:layout_constraintEnd_toStartOf="@id/purchase_rate"
+        app:layout_constraintStart_toEndOf="@+id/purchase_rate_nb"
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
-        android:id="@+id/exchange_date"
+        android:id="@+id/purchase_rate"
         android:layout_width="0dp"
         android:layout_height="50dp"
         android:text="TextView"
         android:textColor="@color/colorWhite"
         android:gravity="center"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/cc"
+        app:layout_constraintStart_toEndOf="@+id/sale_rate"
         app:layout_constraintTop_toTopOf="parent" />
 
 </android.support.constraint.ConstraintLayout>

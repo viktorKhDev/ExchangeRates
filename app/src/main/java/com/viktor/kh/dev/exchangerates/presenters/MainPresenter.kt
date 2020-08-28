@@ -31,8 +31,8 @@ class MainPresenter @Inject constructor() {
         networkService.getAllCourses()
     }
 
-    fun setCourses(list: ArrayList<CurrencyPojo>){
-        mainView.setCourses(list)
+    fun setCourses(cur:CurrencyPojo){
+        mainView.setCourses(cur)
     }
 
 

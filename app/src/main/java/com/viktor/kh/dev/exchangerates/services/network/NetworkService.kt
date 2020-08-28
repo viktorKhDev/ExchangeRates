@@ -29,31 +29,29 @@ class NetworkService {
         Thread{
 
         }
-        val nbuApi:NbuApi = retrofit.create(NbuApi::class.java)
-        var courses:ArrayList<CurrencyPojo>  = ArrayList()
-             val call: Call<List<CurrencyPojo>> = nbuApi.getPosts()
-           call.enqueue(object :Callback<List<CurrencyPojo>>{
-               override fun onResponse(call: Call<List<CurrencyPojo>>, response: Response<List<CurrencyPojo>>) {
+        val pbApi:PbApi = retrofit.create(PbApi::class.java)
+
+             val call: Call<CurrencyPojo> = pbApi.getPosts()
+           call.enqueue(object :Callback<CurrencyPojo>{
+               override fun onResponse(call: Call<CurrencyPojo>, response: Response<CurrencyPojo>) {
                    if(response.isSuccessful){
                        Log.d("MyLog","response.isSuccessful")
-                       var tempList: List<CurrencyPojo>? = response.body()
+                       var temp: CurrencyPojo? = response.body()
 
-                       if (tempList != null) {
-                           for(i in tempList){
-                               courses.add(i)
-                           }
-                           mainPresenter.setCourses(courses)
+                       if (temp != null) {
+
+                           mainPresenter.setCourses(temp)
                        }
                    }
 
                }
 
-               override fun onFailure(call: Call<List<CurrencyPojo>>, t: Throwable) {
+               override fun onFailure(call: Call<CurrencyPojo>, t: Throwable) {
                    Log.d("MyLog","onFailure")
                }
 
            })
-        Log.d("MyLog",courses.size.toString())
+
 
     }
 

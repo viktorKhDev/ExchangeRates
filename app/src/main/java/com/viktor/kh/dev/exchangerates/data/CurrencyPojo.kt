@@ -6,20 +6,16 @@ import com.google.gson.annotations.SerializedName
 
 data class CurrencyPojo (
       @Expose
-      @SerializedName
-          ("r030") val r030 : Int,
+      @SerializedName("date") val date : String,
       @Expose
-      @SerializedName
-            ("txt") val txt : String,
+      @SerializedName("bank") val bank : String,
       @Expose
-      @SerializedName
-            ("rate") val rate : Double,
+      @SerializedName("baseCurrency") val baseCurrency : Int,
       @Expose
-      @SerializedName
-            ("cc") val cc : String,
+      @SerializedName("baseCurrencyLit") val baseCurrencyLit : String,
       @Expose
-      @SerializedName
-            ("exchangedate") val exchangedate : String
+      @SerializedName("exchangeRate") val exchangeRate : List<ExchangeRate>
+
 
 
 )

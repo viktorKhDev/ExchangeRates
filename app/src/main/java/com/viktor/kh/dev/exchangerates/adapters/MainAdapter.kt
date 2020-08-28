@@ -8,11 +8,12 @@ import android.view.ViewGroup
 import android.widget.TextView
 import com.viktor.kh.dev.exchangerates.R
 import com.viktor.kh.dev.exchangerates.data.CurrencyPojo
+import com.viktor.kh.dev.exchangerates.data.ExchangeRate
 import java.util.ArrayList
 import javax.inject.Inject
 
 
-class MainAdapter @Inject constructor(_context:Context, _list:ArrayList<CurrencyPojo>) : RecyclerView.Adapter<MainAdapter.ViewHolder>() {
+class MainAdapter @Inject constructor(_context:Context, _list:List<ExchangeRate>) : RecyclerView.Adapter<MainAdapter.ViewHolder>() {
 
        val list = _list;
        val context = _context;
