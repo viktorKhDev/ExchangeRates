@@ -1,21 +1,12 @@
-package com.viktor.kh.dev.exchangerates
+package com.viktor.kh.dev.exchangerates.ui
 
+import android.opengl.Visibility
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.support.v4.app.Fragment
-import android.support.v7.widget.LinearLayoutManager
-import android.support.v7.widget.RecyclerView
-import android.util.Log
 import android.view.View
 import android.widget.Button
-import android.widget.TextView
-import com.viktor.kh.dev.exchangerates.adapters.MainAdapter
-import com.viktor.kh.dev.exchangerates.data.CurrencyPojo
-import com.viktor.kh.dev.exchangerates.di.App
-import com.viktor.kh.dev.exchangerates.presenters.MainPresenter
-import com.viktor.kh.dev.exchangerates.presenters.MainView
-import com.viktor.kh.dev.exchangerates.ui.CoursesFragment
-import javax.inject.Inject
+import com.viktor.kh.dev.exchangerates.R
 
 class MainActivity  : AppCompatActivity() {
 
@@ -39,6 +30,8 @@ class MainActivity  : AppCompatActivity() {
 
    fun initMainList(){
        val fragment : Fragment = CoursesFragment()
+       supportFragmentManager.beginTransaction().replace(R.id.main_container,fragment).addToBackStack(null).commit()
+       getAllCoursesBtn.visibility = View.GONE
        
    }
 

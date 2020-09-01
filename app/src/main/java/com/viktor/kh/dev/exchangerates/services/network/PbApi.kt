@@ -6,6 +6,6 @@ import retrofit2.http.GET
 
 interface PbApi {
 
-    @GET("date=01.12.2019")
+    @GET("exchange_rates?json&date=01.12.2019")
     fun  getPosts(): Call<CurrencyPojo>
 }

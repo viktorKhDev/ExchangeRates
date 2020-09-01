@@ -25,16 +25,21 @@ class MainAdapter @Inject constructor(_context:Context, _list:List<ExchangeRate>
 
     class ViewHolder (view: View) : RecyclerView.ViewHolder(view) {
         val item  = view
-        val curName = view.findViewById<TextView>(R.id.currency_name)
-        val curRate = view.findViewById<TextView>(R.id.rate)
-        val curCc = view.findViewById<TextView>(R.id.cc)
-        val curExDate = view.findViewById<TextView>(R.id.exchange_date)
+        val baseCurrency = view.findViewById<TextView>(R.id.base_currency)
+        val currency = view.findViewById<TextView>(R.id.currency)
+        val saleRateNB = view.findViewById<TextView>(R.id.sale_rate_nb)
+        val purchaseRateNB = view.findViewById<TextView>(R.id.purchase_rate_nb)
+        val saleRate = view.findViewById<TextView>(R.id.sale_rate)
+        val purchaseRate = view.findViewById<TextView>(R.id.purchase_rate)
 
-        fun bind (currencyPojo: CurrencyPojo,context: Context){
-            curName.setText(currencyPojo.txt)
-            curRate.setText(currencyPojo.rate.toString())
-            curCc.setText(currencyPojo.cc)
-            curExDate.setText(currencyPojo.exchangedate)
+        fun bind (exchangeRate: ExchangeRate,context: Context){
+            baseCurrency.setText(exchangeRate.baseCurrency)
+            currency.setText(exchangeRate.currency)
+            saleRateNB.setText(exchangeRate.saleRateNB.toString())
+            purchaseRateNB.setText(exchangeRate.purchaseRateNB.toString())
+            saleRate.setText(exchangeRate.saleRate.toString())
+            purchaseRate.setText(exchangeRate.purchaseRate.toString())
+
 
         }
 

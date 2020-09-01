@@ -11,7 +11,7 @@ import javax.inject.Singleton
 @Module
 class NetworkModule {
 
-    private val BASE_URL = "https://api.privatbank.ua/p24api/exchange_rates?json&"
+    private val BASE_URL = "https://api.privatbank.ua/p24api/"
 
     @Singleton
     @Provides

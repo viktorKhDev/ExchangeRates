@@ -1,6 +1,6 @@
 package com.viktor.kh.dev.exchangerates.di
 
-import com.viktor.kh.dev.exchangerates.MainActivity
+import com.viktor.kh.dev.exchangerates.ui.MainActivity
 import com.viktor.kh.dev.exchangerates.adapters.MainAdapter
 import com.viktor.kh.dev.exchangerates.presenters.MainPresenter
 import com.viktor.kh.dev.exchangerates.services.network.NetworkService

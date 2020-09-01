@@ -13,7 +13,7 @@ data class ExchangeRate (
     @Expose
     @SerializedName("purchaseRateNB") val purchaseRateNB : Double,
     @Expose
-    @SerializedName("saleRate") val saleRate : Int,
+    @SerializedName("saleRate") val saleRate : Double,
     @Expose
     @SerializedName("purchaseRate") val purchaseRate : Double
 )

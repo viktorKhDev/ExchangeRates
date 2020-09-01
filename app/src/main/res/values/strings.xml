@@ -2,4 +2,5 @@
     <string name="app_name">Курс валют</string>
     <string name="course_on">Курс на:</string>
     <string name="all_courses">все валюты</string>
+    <string name="text_example">TextView</string>
 </resources>
