@@ -5,4 +5,5 @@ import com.viktor.kh.dev.exchangerates.data.CurrencyPojo
 interface MainView {
 
     fun setCourses(cur: CurrencyPojo)
+
 }

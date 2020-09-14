@@ -37,7 +37,10 @@ class CoursesFragment : MainView, Fragment() {
         recyclerView = view.findViewById(R.id.main_list)
         App.component.inject(this)
         mainPresenter.init(this)
-        mainPresenter.getCourses()
+        val bundle: Bundle? = arguments
+        if (bundle != null) {
+            mainPresenter.getCourses(bundle.getString("selectedDate",""))
+        }
        return view
 
     }

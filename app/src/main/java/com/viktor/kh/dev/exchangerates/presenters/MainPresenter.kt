@@ -27,8 +27,8 @@ class MainPresenter @Inject constructor() {
         networkService.initMainPresenter(this)
     }
 
-    fun getCourses(){
-        networkService.getAllCourses()
+    fun getCourses(date:String){
+        networkService.getAllCourses(date)
     }
 
     fun setCourses(cur:CurrencyPojo){
