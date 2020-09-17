@@ -9,6 +9,7 @@
 
 
 
+
     <TextView
         android:id="@+id/text_course"
         android:layout_width="wrap_content"
@@ -36,6 +37,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <android.support.v7.widget.RecyclerView
+        android:layout_marginTop="10dp"
         android:background="@color/colorAccent"
         android:id="@+id/main_list"
         android:layout_width="match_parent"

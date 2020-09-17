@@ -9,23 +9,19 @@ import android.widget.TextView
 import com.viktor.kh.dev.exchangerates.R
 import com.viktor.kh.dev.exchangerates.data.CurrencyPojo
 import com.viktor.kh.dev.exchangerates.data.ExchangeRate
+import java.lang.StringBuilder
 import java.util.ArrayList
 import javax.inject.Inject
 
 
 class MainAdapter @Inject constructor(_context:Context, _list:List<ExchangeRate>) : RecyclerView.Adapter<MainAdapter.ViewHolder>() {
 
-       val list = _list;
+       val list = _list.toMutableList()
        val context = _context;
 
 
 
-
-
-
     class ViewHolder (view: View) : RecyclerView.ViewHolder(view) {
-        val item  = view
-        val baseCurrency = view.findViewById<TextView>(R.id.base_currency)
         val currency = view.findViewById<TextView>(R.id.currency)
         val saleRateNB = view.findViewById<TextView>(R.id.sale_rate_nb)
         val purchaseRateNB = view.findViewById<TextView>(R.id.purchase_rate_nb)
@@ -33,29 +29,46 @@ class MainAdapter @Inject constructor(_context:Context, _list:List<ExchangeRate>
         val purchaseRate = view.findViewById<TextView>(R.id.purchase_rate)
 
         fun bind (exchangeRate: ExchangeRate,context: Context){
-            baseCurrency.setText(exchangeRate.baseCurrency)
-            currency.setText(exchangeRate.currency)
-            saleRateNB.setText(exchangeRate.saleRateNB.toString())
-            purchaseRateNB.setText(exchangeRate.purchaseRateNB.toString())
-            saleRate.setText(exchangeRate.saleRate.toString())
-            purchaseRate.setText(exchangeRate.purchaseRate.toString())
+
+                var strId :Int = context.getResources().getIdentifier(exchangeRate.currency, "string", context.packageName);
+                currency.setText(context.getString(strId))
+                saleRateNB.setText(convertToVisualString(exchangeRate.saleRateNB))
+                purchaseRateNB.setText(convertToVisualString(exchangeRate.purchaseRateNB))
+                saleRate.setText(convertToVisualString(exchangeRate.saleRate))
+                purchaseRate.setText(convertToVisualString(exchangeRate.purchaseRate))
+
+
 
 
         }
 
+        fun convertToVisualString(d:Double):String{
+            return String.format("%.2f",d)
+        }
+
+
     }
+
+
+
+
+
+
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
       var inflater = LayoutInflater.from(context)
         return ViewHolder(inflater.inflate(R.layout.item_layout,parent,false))
     }
 
+
     override fun getItemCount(): Int {
        return list.size
     }
 
+
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         var listItem  = list.get(position)
         holder.bind(listItem,context)
+
     }
 }

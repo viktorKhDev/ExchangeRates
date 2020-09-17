@@ -13,6 +13,7 @@ import android.widget.TextView
 import com.viktor.kh.dev.exchangerates.R
 import com.viktor.kh.dev.exchangerates.adapters.MainAdapter
 import com.viktor.kh.dev.exchangerates.data.CurrencyPojo
+import com.viktor.kh.dev.exchangerates.data.ExchangeRate
 import com.viktor.kh.dev.exchangerates.di.App
 import com.viktor.kh.dev.exchangerates.presenters.MainPresenter
 import com.viktor.kh.dev.exchangerates.presenters.MainView
@@ -54,8 +55,9 @@ class CoursesFragment : MainView, Fragment() {
 
 
     fun initList(cur: CurrencyPojo){
-
-        mainAdapter = MainAdapter(requireContext(),cur.exchangeRate)
+        var list = cur.exchangeRate.toMutableList()
+        list.removeAt(0)
+        mainAdapter = MainAdapter(requireContext(),list)
         recyclerView.apply {
             layoutManager = LinearLayoutManager(context)
             adapter = mainAdapter
