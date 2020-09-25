@@ -30,7 +30,12 @@
     <string name="HUF">Венгерский форинт</string>
     <string name="AUD">Австралийский доллар</string>
     <string name="UAH">Украинская гривна</string>
-
+    <string name="cur_info">Валюта сделки</string>
+    <string name="purchase_rate_nb">Покупка НБУ</string>
+    <string name="sale_rate_nb">Продажа НБУ</string>
+    <string name="sale_rate_pb">Продажа банк</string>
+    <string name="purchase_rate_pb">Покупка банк</string>
+    <string name="much_cur">больше валют</string>
 
 
 </resources>

@@ -53,8 +53,6 @@ class MainAdapter @Inject constructor(_context:Context, _list:List<ExchangeRate>
 
 
 
-
-
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
       var inflater = LayoutInflater.from(context)
         return ViewHolder(inflater.inflate(R.layout.item_layout,parent,false))

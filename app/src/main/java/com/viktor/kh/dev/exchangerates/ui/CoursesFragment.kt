@@ -9,6 +9,7 @@ import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
 import android.widget.TextView
 import com.viktor.kh.dev.exchangerates.R
 import com.viktor.kh.dev.exchangerates.adapters.MainAdapter
@@ -17,6 +18,7 @@ import com.viktor.kh.dev.exchangerates.data.ExchangeRate
 import com.viktor.kh.dev.exchangerates.di.App
 import com.viktor.kh.dev.exchangerates.presenters.MainPresenter
 import com.viktor.kh.dev.exchangerates.presenters.MainView
+import kotlinx.android.synthetic.main.item_layout.*
 import javax.inject.Inject
 
 class CoursesFragment : MainView, Fragment() {
@@ -26,6 +28,7 @@ class CoursesFragment : MainView, Fragment() {
     lateinit var recyclerView: RecyclerView
     lateinit var mainAdapter: MainAdapter
     lateinit var dateText: TextView
+    lateinit var getFullListBtn: Button
 
 
     override fun onCreateView(
@@ -42,21 +45,30 @@ class CoursesFragment : MainView, Fragment() {
         if (bundle != null) {
             mainPresenter.getCourses(bundle.getString("selectedDate",""))
         }
+        getFullListBtn = view.findViewById(R.id.get_full_list_btn)
+        getFullListBtn.setOnClickListener(View.OnClickListener {
+            mainPresenter.initFullList()
+            getFullListBtn.visibility = View.GONE
+        })
        return view
 
     }
 
-    fun init(cur: CurrencyPojo){
 
-        dateText.text = cur.date
-        initList(cur)
 
+    override fun initShortList(list: List<ExchangeRate>,date: String) {
+        dateText.text = date
+        mainAdapter = MainAdapter(requireContext(),list)
+        recyclerView.apply {
+            layoutManager = LinearLayoutManager(context)
+            adapter = mainAdapter
+        }
+        mainAdapter.notifyDataSetChanged()
     }
 
 
-    fun initList(cur: CurrencyPojo){
-        var list = cur.exchangeRate.toMutableList()
-        list.removeAt(0)
+    override fun initFullList(list: List<ExchangeRate>,date: String){
+        dateText.text = date
         mainAdapter = MainAdapter(requireContext(),list)
         recyclerView.apply {
             layoutManager = LinearLayoutManager(context)
@@ -69,9 +81,13 @@ class CoursesFragment : MainView, Fragment() {
 
 
 
-    override fun setCourses(cur: CurrencyPojo) {
-        init(cur)
-    }
+
+
+
+
+
+
+
 
 
 }
