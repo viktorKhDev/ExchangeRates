@@ -9,39 +9,45 @@ import android.view.View
 import android.widget.Button
 import android.widget.TextView
 import android.widget.Toast
+import com.prolificinteractive.materialcalendarview.CalendarDay
 import com.prolificinteractive.materialcalendarview.MaterialCalendarView
 import com.prolificinteractive.materialcalendarview.OnDateSelectedListener
 import com.viktor.kh.dev.exchangerates.R
 import kotlinx.android.synthetic.main.activity_main.*
+import java.util.*
 
 
 class MainActivity  : AppCompatActivity() {
 
-    lateinit var getAllCoursesBtn: Button
-    lateinit var selectedDate: TextView
-    lateinit var calendarView: MaterialCalendarView
-
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        getAllCoursesBtn = findViewById(R.id.get_all_courses_btn)
-        selectedDate = findViewById(R.id.text_selected_date)
-        calendarView = findViewById(R.id.calendarView)
 
-        getAllCoursesBtn.setOnClickListener(View.OnClickListener {
+      get_all_courses_btn.setOnClickListener(View.OnClickListener {
             initMainList()
         })
         calendarView.setOnDateChangedListener { widget, date, selected ->
-            selectedDate.text = "${date.day}.${date.month+1}.${date.year}"
+            text_selected_date.text = "${date.day}.${date.month+1}.${date.year}"
         }
 
+        val calendar = Calendar.getInstance()
+        val  calendarMin = GregorianCalendar(calendar.get(Calendar.YEAR)-4
+        ,calendar.get(Calendar.MONTH)
+        ,calendar.get(Calendar.DAY_OF_MONTH))
+
+
+        calendarView.state()
+            .edit()
+            .setMaximumDate(calendar)
+            .setMinimumDate(calendarMin)
+            .commit()
 
     }
 
     override fun onBackPressed() {
-        if( getAllCoursesBtn.visibility == View.GONE){
-            getAllCoursesBtn.visibility = View.VISIBLE
+
+        if( get_all_courses_btn.visibility == View.GONE){
+            get_all_courses_btn.visibility = View.VISIBLE
         }
 
         super.onBackPressed()
@@ -54,7 +60,7 @@ class MainActivity  : AppCompatActivity() {
             bundle.putString("selectedDate", text_selected_date.text.toString())
             fragment.arguments = bundle
             supportFragmentManager.beginTransaction().replace(R.id.main_container,fragment).addToBackStack(null).commit()
-            getAllCoursesBtn.visibility = View.GONE
+            get_all_courses_btn.visibility = View.GONE
         }else{
             Toast.makeText(this,"Нужно выбрать дату!", Toast.LENGTH_LONG)
         }
@@ -64,12 +70,5 @@ class MainActivity  : AppCompatActivity() {
 
 
 
-
-
-
-
-
-
-
-
 }
+

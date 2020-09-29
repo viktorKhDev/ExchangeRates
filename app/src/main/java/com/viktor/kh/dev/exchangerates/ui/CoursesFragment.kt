@@ -19,17 +19,14 @@ import com.viktor.kh.dev.exchangerates.di.App
 import com.viktor.kh.dev.exchangerates.presenters.MainPresenter
 import com.viktor.kh.dev.exchangerates.presenters.MainView
 import kotlinx.android.synthetic.main.item_layout.*
+import kotlinx.android.synthetic.main.main_list_fragment.*
 import javax.inject.Inject
 
 class CoursesFragment : MainView, Fragment() {
 
     @Inject
     lateinit var mainPresenter: MainPresenter
-    lateinit var recyclerView: RecyclerView
     lateinit var mainAdapter: MainAdapter
-    lateinit var dateText: TextView
-    lateinit var getFullListBtn: Button
-
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -37,18 +34,15 @@ class CoursesFragment : MainView, Fragment() {
         savedInstanceState: Bundle?
     ): View? {
          val view :View = inflater.inflate(R.layout.main_list_fragment,container,false)
-        dateText = view.findViewById(R.id.text_date)
-        recyclerView = view.findViewById(R.id.main_list)
         App.component.inject(this)
         mainPresenter.init(this)
         val bundle: Bundle? = arguments
         if (bundle != null) {
             mainPresenter.getCourses(bundle.getString("selectedDate",""))
         }
-        getFullListBtn = view.findViewById(R.id.get_full_list_btn)
-        getFullListBtn.setOnClickListener(View.OnClickListener {
+        get_full_list_btn.setOnClickListener(View.OnClickListener {
             mainPresenter.initFullList()
-            getFullListBtn.visibility = View.GONE
+            get_full_list_btn.visibility = View.GONE
         })
        return view
 
@@ -57,9 +51,9 @@ class CoursesFragment : MainView, Fragment() {
 
 
     override fun initShortList(list: List<ExchangeRate>,date: String) {
-        dateText.text = date
+        text_date.text = date
         mainAdapter = MainAdapter(requireContext(),list)
-        recyclerView.apply {
+        main_list.apply {
             layoutManager = LinearLayoutManager(context)
             adapter = mainAdapter
         }
@@ -68,9 +62,9 @@ class CoursesFragment : MainView, Fragment() {
 
 
     override fun initFullList(list: List<ExchangeRate>,date: String){
-        dateText.text = date
+        text_date.text = date
         mainAdapter = MainAdapter(requireContext(),list)
-        recyclerView.apply {
+        main_list.apply {
             layoutManager = LinearLayoutManager(context)
             adapter = mainAdapter
         }
