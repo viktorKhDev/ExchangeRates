@@ -27,7 +27,11 @@ class MainActivity  : AppCompatActivity() {
             initMainList()
         })
         calendarView.setOnDateChangedListener { widget, date, selected ->
-            text_selected_date.text = "${date.day}.${date.month+1}.${date.year}"
+
+            var day = add0ToStart(date.day.toString())
+            var month = add0ToStart((date.month+1).toString())
+            var year = date.year.toString()
+            text_selected_date.text = "${day}.${month}.${year}"
         }
 
         val calendar = Calendar.getInstance()
@@ -67,6 +71,15 @@ class MainActivity  : AppCompatActivity() {
 
        
    }
+
+    fun add0ToStart(num:String):String{
+        if(num.length==1){
+            return "0${num}"
+        }else{
+            return num
+        }
+    }
+
 
 
 

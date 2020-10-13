@@ -8,20 +8,17 @@
     android:background="@color/colorAccent">
 
 
-
     <TextView
 
         android:id="@+id/text_selected_date"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:layout_constraintBottom_toTopOf="@id/get_all_courses_btn"
-        app:layout_constraintEnd_toEndOf="parent"
-        android:layout_marginBottom="40dp"
-        app:layout_constraintStart_toStartOf="parent"
-        android:textColor="@color/colorDark"
+        android:layout_marginBottom="20dp"
+        android:textColor="@color/colorWhite"
         android:textSize="20sp"
-
-        />
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/get_all_courses_btn" />
 
     <Button
         android:id="@+id/get_all_courses_btn"
@@ -32,11 +29,10 @@
         app:layout_constraintEnd_toEndOf="parent"
         android:layout_marginBottom="10dp"
         app:layout_constraintStart_toStartOf="parent"
-        android:layout_marginTop="80dp"
         android:textColor="@color/colorWhite"
         android:background="@drawable/button_style"
         android:elevation="@dimen/cardview_compat_inset_shadow"
-        android:text="@string/all_courses">
+        android:text="@string/get_courses_on">
 
     </Button>
 
@@ -50,7 +46,7 @@
         app:layout_constraintTop_toTopOf="parent"
         android:selectedWeekBackgroundColor="#ff0000"
         android:weekNumberColor="#0000ff"
-        android:layout_marginBottom="10dp"
+        android:layout_marginBottom="20dp"
         android:weekSeparatorLineColor="#00ff00" />
 
     <FrameLayout
