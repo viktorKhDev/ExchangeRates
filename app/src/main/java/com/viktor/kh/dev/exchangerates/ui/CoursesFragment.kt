@@ -40,7 +40,8 @@ class CoursesFragment : MainView, Fragment() {
         if (bundle != null) {
             mainPresenter.getCourses(bundle.getString("selectedDate",""))
         }
-        get_full_list_btn.setOnClickListener(View.OnClickListener {
+        val getFullListBtn = view.findViewById<Button>(R.id.get_full_list_btn)
+        getFullListBtn.setOnClickListener(View.OnClickListener {
             mainPresenter.initFullList()
             get_full_list_btn.visibility = View.GONE
         })
