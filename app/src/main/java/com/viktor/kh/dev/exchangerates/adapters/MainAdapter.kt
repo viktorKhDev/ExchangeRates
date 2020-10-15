@@ -1,7 +1,7 @@
 package com.viktor.kh.dev.exchangerates.adapters
 
 import android.content.Context
-import android.support.v7.widget.RecyclerView
+import androidx.recyclerview.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -14,14 +14,14 @@ import java.util.ArrayList
 import javax.inject.Inject
 
 
-class MainAdapter @Inject constructor(_context:Context, _list:List<ExchangeRate>) : RecyclerView.Adapter<MainAdapter.ViewHolder>() {
+class MainAdapter @Inject constructor(_context:Context, _list:List<ExchangeRate>) : androidx.recyclerview.widget.RecyclerView.Adapter<MainAdapter.ViewHolder>() {
 
        val list = _list.toMutableList()
        val context = _context;
 
 
 
-    class ViewHolder (view: View) : RecyclerView.ViewHolder(view) {
+    class ViewHolder (view: View) : androidx.recyclerview.widget.RecyclerView.ViewHolder(view) {
         val currency = view.findViewById<TextView>(R.id.currency)
         val saleRateNB = view.findViewById<TextView>(R.id.sale_rate_nb)
         val purchaseRateNB = view.findViewById<TextView>(R.id.purchase_rate_nb)

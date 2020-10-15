@@ -2,9 +2,9 @@ package com.viktor.kh.dev.exchangerates.ui
 
 
 
-import android.support.v7.app.AppCompatActivity
+import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.support.v4.app.Fragment
+import androidx.fragment.app.Fragment
 import android.view.View
 import android.widget.Toast
 import com.viktor.kh.dev.exchangerates.R
@@ -54,7 +54,7 @@ class MainActivity  : AppCompatActivity() {
 
     fun initMainList(){
         if(text_selected_date.text.length>1){
-            val fragment : Fragment = CoursesFragment()
+            val fragment : androidx.fragment.app.Fragment = CoursesFragment()
             val bundle: Bundle = Bundle()
             bundle.putString("selectedDate", text_selected_date.text.toString())
             fragment.arguments = bundle
