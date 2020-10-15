@@ -6,12 +6,7 @@ import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.view.View
-import android.widget.Button
-import android.widget.TextView
 import android.widget.Toast
-import com.prolificinteractive.materialcalendarview.CalendarDay
-import com.prolificinteractive.materialcalendarview.MaterialCalendarView
-import com.prolificinteractive.materialcalendarview.OnDateSelectedListener
 import com.viktor.kh.dev.exchangerates.R
 import kotlinx.android.synthetic.main.activity_main.*
 import java.util.*
