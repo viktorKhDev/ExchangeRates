@@ -3,9 +3,11 @@ package com.viktor.kh.dev.exchangerates.services.network
 import com.viktor.kh.dev.exchangerates.data.CurrencyPojo
 import retrofit2.Call
 import retrofit2.http.GET
+import retrofit2.http.Path
+import retrofit2.http.Query
 
 interface PbApi {
 
-    @GET("exchange_rates?json&date=01.12.2019")
-    fun  getPosts(): Call<CurrencyPojo>
+    @GET("exchange_rates?json")
+    fun  getPosts(@Query("date") date:String ): Call<CurrencyPojo>
 }

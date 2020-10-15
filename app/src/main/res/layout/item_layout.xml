@@ -20,30 +20,23 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:background="@color/colorPrimary">
-    <TextView
-        android:id="@+id/base_currency"
-        android:layout_width="0dp"
-        android:layout_height="50dp"
-        android:text="@string/text_example"
-        android:textColor="@color/colorWhite"
-        android:gravity="center"
-        app:layout_constraintEnd_toStartOf="@+id/currency"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+
 
     <TextView
         android:id="@+id/currency"
-        android:layout_width="0dp"
+        android:padding="3dp"
+        android:layout_width="130dp"
         android:layout_height="50dp"
         android:text="@string/text_example"
         android:textColor="@color/colorWhite"
         android:gravity="center"
         app:layout_constraintEnd_toStartOf="@+id/sale_rate_nb"
-        app:layout_constraintStart_toEndOf="@+id/base_currency"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/sale_rate_nb"
+        android:padding="3dp"
         android:layout_width="0dp"
         android:layout_height="50dp"
         android:text="@string/text_example"
@@ -58,7 +51,8 @@
        android:id="@+id/purchase_rate_nb"
        android:layout_width="0dp"
        android:layout_height="50dp"
-       android:text="@string/text_example"
+          android:padding="3dp"
+          android:text="@string/text_example"
        android:textColor="@color/colorWhite"
        android:gravity="center"
        app:layout_constraintEnd_toStartOf="@id/sale_rate"
@@ -69,6 +63,7 @@
     <TextView
         android:id="@+id/sale_rate"
         android:layout_width="0dp"
+        android:padding="3dp"
         android:layout_height="50dp"
         android:text="@string/text_example"
         android:textColor="@color/colorWhite"
@@ -80,6 +75,7 @@
     <TextView
         android:id="@+id/purchase_rate"
         android:layout_width="0dp"
+        android:padding="3dp"
         android:layout_height="50dp"
         android:text="@string/text_example"
         android:textColor="@color/colorWhite"

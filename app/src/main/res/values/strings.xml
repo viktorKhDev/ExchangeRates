@@ -3,4 +3,40 @@
     <string name="course_on">Курс на:</string>
     <string name="all_courses">все валюты</string>
     <string name="text_example">TextView</string>
+    <string name="get_courses_on">получить курс на:</string>
+    <string name="USD">Доллар США</string>
+    <string name="EUR">Евро</string>
+    <string name="RUB">Российский рубль</string>
+    <string name="CHF">Швейцарский франк</string>
+    <string name="GBP">Британский фунт</string>
+    <string name="PLZ">Польский злотый</string>
+    <string name="SEK">Шведская крона</string>
+    <string name="XAU">Золото</string>
+    <string name="CAD">Канадский доллар</string>
+    <string name="BYN">Белорусский рубль</string>
+    <string name="AZN">Азербайджанский манат</string>
+    <string name="CNY">Китайский юань</string>
+    <string name="CZK">Чешская крона</string>
+    <string name="DKK">Датская крона</string>
+    <string name="JPY">Японская иена</string>
+    <string name="KZT">Казахстанский тенге</string>
+    <string name="MDL">Молдавский лей</string>
+    <string name="NOK">Норвежская крона</string>
+    <string name="SGD">Сингапурский доллар</string>
+    <string name="TRY">Турецкая лира</string>
+    <string name="TMT">Туркменский манат</string>
+    <string name="UZS">Узбекский сум</string>
+    <string name="GEL">Грузинский лари</string>
+    <string name="ILS">Шекель</string>
+    <string name="HUF">Венгерский форинт</string>
+    <string name="AUD">Австралийский доллар</string>
+    <string name="UAH">Украинская гривна</string>
+    <string name="cur_info">Валюта сделки</string>
+    <string name="purchase_rate_nb">Покупка НБУ</string>
+    <string name="sale_rate_nb">Продажа НБУ</string>
+    <string name="sale_rate_pb">Продажа банк</string>
+    <string name="purchase_rate_pb">Покупка банк</string>
+    <string name="much_cur">больше валют</string>
+
+
 </resources>

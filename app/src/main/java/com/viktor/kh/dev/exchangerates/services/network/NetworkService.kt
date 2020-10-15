@@ -24,14 +24,12 @@ class NetworkService {
     }
 
 
-    fun getAllCourses(){
+    fun getAllCourses(date:String){
 
-        Thread{
-
-        }
+        Log.d("MyLog","date = ${date}")
         val pbApi:PbApi = retrofit.create(PbApi::class.java)
 
-             val call: Call<CurrencyPojo> = pbApi.getPosts()
+             val call: Call<CurrencyPojo> = pbApi.getPosts(date)
            call.enqueue(object :Callback<CurrencyPojo>{
                override fun onResponse(call: Call<CurrencyPojo>, response: Response<CurrencyPojo>) {
                    if(response.isSuccessful){
