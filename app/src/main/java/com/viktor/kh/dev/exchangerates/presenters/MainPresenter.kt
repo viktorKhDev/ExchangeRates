@@ -3,7 +3,9 @@ package com.viktor.kh.dev.exchangerates.presenters
 import android.content.Context
 import com.viktor.kh.dev.exchangerates.data.CurrencyPojo
 import com.viktor.kh.dev.exchangerates.data.ExchangeRate
+import com.viktor.kh.dev.exchangerates.data.ExchangeRateRoom
 import com.viktor.kh.dev.exchangerates.di.App
+import com.viktor.kh.dev.exchangerates.repository.ExchangeRateDao
 import com.viktor.kh.dev.exchangerates.services.network.NetworkService
 import javax.inject.Inject
 
@@ -16,6 +18,8 @@ class MainPresenter @Inject constructor() {
     lateinit var context: Context
     @Inject
     lateinit var networkService: NetworkService
+    @Inject
+    lateinit var dao: ExchangeRateDao
 
 
     fun init(mainView: MainView){
@@ -30,7 +34,11 @@ class MainPresenter @Inject constructor() {
 
     fun setCourses(cur:CurrencyPojo){
 
+
         tempCurrencyPojo = cur
+
+
+
         initShortList()
     }
 
@@ -70,8 +78,20 @@ class MainPresenter @Inject constructor() {
 
 
 
-
-
+ /* suspend fun updateDb(){
+      for (i in tempCurrencyPojo.exchangeRate){
+          dao.insert(ExchangeRateRoom(
+              0,
+              tempCurrencyPojo.date,
+              i.baseCurrency,
+              i.currency,
+              i.saleRateNB,
+              i.purchaseRateNB,
+              i.saleRate,
+              i.purchaseRate
+          ))
+}
+*/
 
 
 

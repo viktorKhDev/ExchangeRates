@@ -1,18 +1,31 @@
 package com.viktor.kh.dev.exchangerates.di
 
+import android.app.Application
+import android.content.Context
 import androidx.room.Room
 import com.viktor.kh.dev.exchangerates.repository.AppDatabase
+import com.viktor.kh.dev.exchangerates.repository.ExchangeRateDao
 import dagger.Module
+import dagger.Provides
+import javax.inject.Singleton
 
 @Module
-class DataBaseModule {
+class DataBaseModule() {
 
-   /* fun provideDataBase():AppDatabase{
+    @Provides
+    @Singleton
+    fun provideDataBase(context: Context):AppDatabase{
         return  Room.databaseBuilder(
-            applicationContext,
-            AppDatabase::class.java, "database-name"
+            context,
+            AppDatabase::class.java, "database"
         ).build()
-    }*/
+    }
+
+    @Provides
+    @Singleton
+    fun provideDao(db: AppDatabase): ExchangeRateDao{
+        return db.exchangeRateDao()
+    }
 
 
 }

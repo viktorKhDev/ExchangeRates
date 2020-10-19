@@ -4,18 +4,19 @@ import androidx.room.Dao
 import androidx.room.Delete
 import androidx.room.Insert
 import androidx.room.Query
+import com.viktor.kh.dev.exchangerates.data.ExchangeRateRoom
 
 @Dao
 interface ExchangeRateDao {
 
 
-    @Query("SELECT * FROM exchangeratedao")
-    fun getAll(): List<ExchangeRateDao>
+    @Query("SELECT * FROM exchangerateroom")
+    fun getAll(): List<ExchangeRateRoom>
 
     @Insert
-    fun insert(exchangeRateDao: ExchangeRateDao)
+    fun insert(exchangeRateRoom: ExchangeRateRoom)
 
     @Delete
-    fun delete(exchangeRateDao: ExchangeRateDao)
+    fun delete(exchangeRateRoom: ExchangeRateRoom)
 
 }
