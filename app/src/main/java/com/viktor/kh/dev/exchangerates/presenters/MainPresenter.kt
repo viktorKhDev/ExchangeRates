@@ -7,7 +7,9 @@ import com.viktor.kh.dev.exchangerates.data.ExchangeRateRoom
 import com.viktor.kh.dev.exchangerates.di.App
 import com.viktor.kh.dev.exchangerates.repository.ExchangeRateDao
 import com.viktor.kh.dev.exchangerates.services.network.NetworkService
+import kotlinx.coroutines.Dispatchers
 import javax.inject.Inject
+import kotlin.concurrent.thread
 
 
 class MainPresenter @Inject constructor() {
@@ -36,6 +38,11 @@ class MainPresenter @Inject constructor() {
 
 
         tempCurrencyPojo = cur
+
+
+        thread {
+            updateDb()
+        }
 
 
 
@@ -78,22 +85,25 @@ class MainPresenter @Inject constructor() {
 
 
 
- /* suspend fun updateDb(){
-      for (i in tempCurrencyPojo.exchangeRate){
-          dao.insert(ExchangeRateRoom(
-              0,
-              tempCurrencyPojo.date,
-              i.baseCurrency,
-              i.currency,
-              i.saleRateNB,
-              i.purchaseRateNB,
-              i.saleRate,
-              i.purchaseRate
-          ))
-}
-*/
+   fun updateDb() {
+       for (i in tempCurrencyPojo.exchangeRate) {
+           dao.insert(
+               ExchangeRateRoom(
+                   0,
+                   tempCurrencyPojo.date,
+                   i.baseCurrency,
+                   i.currency,
+                   i.saleRateNB,
+                   i.purchaseRateNB,
+                   i.saleRate,
+                   i.purchaseRate
+               )
+           )
 
 
+       }
+
+   }
 
 
 }
