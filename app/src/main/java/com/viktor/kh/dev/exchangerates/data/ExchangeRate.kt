@@ -5,15 +5,15 @@ import com.google.gson.annotations.SerializedName
 
 data class ExchangeRate (
     @Expose
-    @SerializedName("baseCurrency") val baseCurrency : String,
+    @SerializedName("baseCurrency") val baseCurrency : String?,
     @Expose
-    @SerializedName("currency") val currency : String,
+    @SerializedName("currency") val currency : String?,
     @Expose
-    @SerializedName("saleRateNB") val saleRateNB : Double,
+    @SerializedName("saleRateNB") val saleRateNB : Double?,
     @Expose
-    @SerializedName("purchaseRateNB") val purchaseRateNB : Double,
+    @SerializedName("purchaseRateNB") val purchaseRateNB : Double?,
     @Expose
-    @SerializedName("saleRate") val saleRate : Double,
+    @SerializedName("saleRate") val saleRate : Double?,
     @Expose
-    @SerializedName("purchaseRate") val purchaseRate : Double
+    @SerializedName("purchaseRate") val purchaseRate : Double?
 )

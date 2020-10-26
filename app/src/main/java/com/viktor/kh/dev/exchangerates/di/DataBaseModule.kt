@@ -5,6 +5,7 @@ import android.content.Context
 import androidx.room.Room
 import com.viktor.kh.dev.exchangerates.repository.AppDatabase
 import com.viktor.kh.dev.exchangerates.repository.ExchangeRateDao
+import com.viktor.kh.dev.exchangerates.repository.Repository
 import dagger.Module
 import dagger.Provides
 import javax.inject.Singleton
@@ -25,6 +26,12 @@ class DataBaseModule() {
     @Singleton
     fun provideDao(db: AppDatabase): ExchangeRateDao{
         return db.exchangeRateDao()
+    }
+
+    @Provides
+    @Singleton
+    fun provideRepository(): Repository {
+        return Repository()
     }
 
 

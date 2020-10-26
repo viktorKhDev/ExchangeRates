@@ -32,10 +32,10 @@ class MainAdapter @Inject constructor(_context:Context, _list:List<ExchangeRate>
 
                 var strId :Int = context.getResources().getIdentifier(exchangeRate.currency, "string", context.packageName);
                 currency.setText(context.getString(strId))
-                saleRateNB.setText(convertToVisualString(exchangeRate.saleRateNB))
-                purchaseRateNB.setText(convertToVisualString(exchangeRate.purchaseRateNB))
-                saleRate.setText(convertToVisualString(exchangeRate.saleRate))
-                purchaseRate.setText(convertToVisualString(exchangeRate.purchaseRate))
+                saleRateNB.setText(convertToVisualString(exchangeRate.saleRateNB!!))
+                purchaseRateNB.setText(convertToVisualString(exchangeRate.purchaseRateNB!!))
+                saleRate.setText(convertToVisualString(exchangeRate.saleRate!!))
+                purchaseRate.setText(convertToVisualString(exchangeRate.purchaseRate!!))
 
 
 

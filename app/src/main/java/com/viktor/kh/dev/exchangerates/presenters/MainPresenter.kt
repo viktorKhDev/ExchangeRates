@@ -6,8 +6,11 @@ import com.viktor.kh.dev.exchangerates.data.ExchangeRate
 import com.viktor.kh.dev.exchangerates.data.ExchangeRateRoom
 import com.viktor.kh.dev.exchangerates.di.App
 import com.viktor.kh.dev.exchangerates.repository.ExchangeRateDao
+import com.viktor.kh.dev.exchangerates.repository.Repository
 import com.viktor.kh.dev.exchangerates.services.network.NetworkService
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 import kotlin.concurrent.thread
 
@@ -20,32 +23,35 @@ class MainPresenter @Inject constructor() {
     lateinit var context: Context
     @Inject
     lateinit var networkService: NetworkService
-    @Inject
-    lateinit var dao: ExchangeRateDao
+   @Inject
+   lateinit var repository: Repository
 
 
     fun init(mainView: MainView){
         App.component.inject(this)
         this.mainView = mainView
-        networkService.initMainPresenter(this)
+        //networkService.initMainPresenter(this)
+        repository.initMainPresenter(this)
     }
 
     fun getCourses(date:String){
-        networkService.getAllCourses(date)
+
+       /* if(!repository.isForDate(date)){
+            networkService.getAllCourses(date)
+        }else{
+            tempCurrencyPojo = repository.getForDate(date)
+            initShortList()
+        }*/
+
+     GlobalScope.launch(Dispatchers.IO) {
+         repository.getForDate(date)
+     }
+
     }
 
     fun setCourses(cur:CurrencyPojo){
-
-
         tempCurrencyPojo = cur
-
-
-        thread {
-            updateDb()
-        }
-
-
-
+        repository.updateDb(tempCurrencyPojo)
         initShortList()
     }
 
@@ -85,25 +91,7 @@ class MainPresenter @Inject constructor() {
 
 
 
-   fun updateDb() {
-       for (i in tempCurrencyPojo.exchangeRate) {
-           dao.insert(
-               ExchangeRateRoom(
-                   0,
-                   tempCurrencyPojo.date,
-                   i.baseCurrency,
-                   i.currency,
-                   i.saleRateNB,
-                   i.purchaseRateNB,
-                   i.saleRate,
-                   i.purchaseRate
-               )
-           )
 
-
-       }
-
-   }
 
 
 }
