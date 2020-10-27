@@ -1,5 +1,6 @@
 package com.viktor.kh.dev.exchangerates.repository
 
+import android.util.Log
 import com.viktor.kh.dev.exchangerates.data.CurrencyPojo
 import com.viktor.kh.dev.exchangerates.data.ExchangeRate
 import com.viktor.kh.dev.exchangerates.data.ExchangeRateRoom
@@ -11,7 +12,7 @@ import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
-class Repository {
+class Repository @Inject constructor() {
 
     @Inject
     lateinit var dao: ExchangeRateDao
@@ -21,19 +22,30 @@ class Repository {
     lateinit var mainPresenter: MainPresenter
 
 
-    @Inject constructor(){
-        App.component.inject(this)
-    }
-
     fun initMainPresenter(mainPresenter: MainPresenter){
+        App.component.inject(this)
         this.mainPresenter = mainPresenter
         networkService.initMainPresenter(mainPresenter)
     }
 
-    fun updateDb( tempCurrencyPojo :CurrencyPojo){
+
+    fun getCourses(date: String){
+        Log.d("MyLog", "start getCourses")
         GlobalScope.launch(Dispatchers.IO) {
-            if(!isForDate(tempCurrencyPojo.date))
-                for (i in tempCurrencyPojo.exchangeRate) {
+            val list =  dao.getAll()
+
+           if(list.isNotEmpty()){
+               getForDate(list,date)
+           }else{
+               getFromNetwork(date)
+           }
+        }
+    }
+
+    fun updateDb( tempCurrencyPojo :CurrencyPojo){
+        Log.d("MyLog", "start updateDb")
+        GlobalScope.launch(Dispatchers.IO) {
+            for (i in tempCurrencyPojo.exchangeRate) {
                     dao.insert(
                         ExchangeRateRoom(
                             0,
@@ -46,27 +58,26 @@ class Repository {
                             i.purchaseRate
                         )
                     )
-
-
-                }
+            }
         }
 
     }
 
-    fun isForDate(date:String):Boolean{
-        return dao.getForDate(date)!=null
-    }
+
+    fun getFromNetwork(date: String){
+        Log.d("MyLog", "start getFromNetwork")
+       GlobalScope.launch(Dispatchers.Main){
+           networkService.getAllCourses(date)
+       }
+
+   }
 
 
-  suspend fun getForDate(date:String) {
-
-      networkService.getAllCourses(date)
-
-       /* if (!isForDate(date)){
-            networkService.getAllCourses(date)
-        }else{
-            val exchange = mutableListOf<ExchangeRate>()
-            for(i in dao.getForDate(date)){
+      fun getForDate(list: List<ExchangeRateRoom>,date: String) {
+          Log.d("MyLog", "start getForDate")
+      val exchange = mutableListOf<ExchangeRate>()
+            for(i in list){
+                if(i.date==date)
                 exchange.add(ExchangeRate(
                     i.baseCurrency,
                     i.currency,
@@ -77,6 +88,7 @@ class Repository {
                 ))
             }
 
+          if (exchange.isNotEmpty()){
 
             GlobalScope.launch(Dispatchers.Main){
                 mainPresenter.setCourses(CurrencyPojo(
@@ -88,11 +100,10 @@ class Repository {
                 ))
             }
 
-        }*/
-
-
-
-    }
+        }else{
+              getFromNetwork(date)
+          }
+      }
 
 
 }

@@ -4,6 +4,7 @@ import android.util.Log
 import com.viktor.kh.dev.exchangerates.data.CurrencyPojo
 import com.viktor.kh.dev.exchangerates.di.App
 import com.viktor.kh.dev.exchangerates.presenters.MainPresenter
+import com.viktor.kh.dev.exchangerates.repository.Repository
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -15,13 +16,17 @@ class NetworkService {
 
     lateinit var mainPresenter: MainPresenter
 
+    @Inject
+    lateinit var repository: Repository
+
     @Inject constructor(retrofit: Retrofit){
         this.retrofit = retrofit
         App.component.inject(this)
     }
+
     fun initMainPresenter(mainPresenter: MainPresenter){
         this.mainPresenter = mainPresenter
-    }
+     }
 
 
     fun getAllCourses(date:String){
@@ -37,8 +42,9 @@ class NetworkService {
                        var temp: CurrencyPojo? = response.body()
 
                        if (temp != null) {
-
+                             Log.d("MyLog", "srart network")
                            mainPresenter.setCourses(temp)
+                           repository.updateDb(temp)
                        }
                    }
 

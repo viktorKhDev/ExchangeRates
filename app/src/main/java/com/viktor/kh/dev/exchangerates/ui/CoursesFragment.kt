@@ -2,6 +2,7 @@ package com.viktor.kh.dev.exchangerates.ui
 
 
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import android.view.LayoutInflater
@@ -21,6 +22,7 @@ class CoursesFragment : MainView, androidx.fragment.app.Fragment() {
 
     @Inject
     lateinit var mainPresenter: MainPresenter
+
     lateinit var mainAdapter: MainAdapter
 
     override fun onCreateView(
@@ -47,6 +49,7 @@ class CoursesFragment : MainView, androidx.fragment.app.Fragment() {
 
 
     override fun initShortList(list: List<ExchangeRate>,date: String) {
+        Log.d("MyLog", " initShortList list size in fragment = ${list.size}")
         text_date.text = date
         mainAdapter = MainAdapter(requireContext(),list)
         main_list.apply {
@@ -59,6 +62,7 @@ class CoursesFragment : MainView, androidx.fragment.app.Fragment() {
 
 
     override fun initFullList(list: List<ExchangeRate>,date: String){
+        Log.d("MyLog", " initFullList  list size in fragment = ${list.size}")
         text_date.text = date
         mainAdapter = MainAdapter(requireContext(),list)
         main_list.apply {

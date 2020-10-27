@@ -1,6 +1,7 @@
 package com.viktor.kh.dev.exchangerates.presenters
 
 import android.content.Context
+import android.util.Log
 import com.viktor.kh.dev.exchangerates.data.CurrencyPojo
 import com.viktor.kh.dev.exchangerates.data.ExchangeRate
 import com.viktor.kh.dev.exchangerates.data.ExchangeRateRoom
@@ -30,33 +31,23 @@ class MainPresenter @Inject constructor() {
     fun init(mainView: MainView){
         App.component.inject(this)
         this.mainView = mainView
-        //networkService.initMainPresenter(this)
         repository.initMainPresenter(this)
     }
 
     fun getCourses(date:String){
 
-       /* if(!repository.isForDate(date)){
-            networkService.getAllCourses(date)
-        }else{
-            tempCurrencyPojo = repository.getForDate(date)
-            initShortList()
-        }*/
-
-     GlobalScope.launch(Dispatchers.IO) {
-         repository.getForDate(date)
-     }
-
+        repository.getCourses(date)
     }
 
     fun setCourses(cur:CurrencyPojo){
         tempCurrencyPojo = cur
-        repository.updateDb(tempCurrencyPojo)
         initShortList()
     }
 
     fun initShortList(){
+        Log.d("MyLog", "start initShortList")
         var list = tempCurrencyPojo.exchangeRate.toMutableList()
+        Log.d("MyLog", "list size = ${list.size}")
         var newList =  mutableListOf<ExchangeRate>()
 
         for (i in 0..list.size-1){
@@ -75,6 +66,7 @@ class MainPresenter @Inject constructor() {
     }
 
     fun initFullList(){
+        Log.d("MyLog", "start initFullList")
         var list = tempCurrencyPojo.exchangeRate.toMutableList()
         list.removeAt(0)
         var num: Int = 0
