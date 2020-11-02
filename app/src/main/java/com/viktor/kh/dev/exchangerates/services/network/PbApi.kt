@@ -9,5 +9,5 @@ import retrofit2.http.Query
 interface PbApi {
 
     @GET("exchange_rates?json")
-    fun  getPosts(@Query("date") date:String ): Call<CurrencyPojo>
+     fun  getPosts(@Query("date") date:String ): Call<CurrencyPojo>
 }

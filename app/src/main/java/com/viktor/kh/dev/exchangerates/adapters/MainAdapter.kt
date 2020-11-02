@@ -30,20 +30,20 @@ class MainAdapter @Inject constructor(_context:Context, _list:List<ExchangeRate>
 
         fun bind (exchangeRate: ExchangeRate,context: Context){
 
-                var strId :Int = context.getResources().getIdentifier(exchangeRate.currency, "string", context.packageName);
+            var strId :Int = context.getResources().getIdentifier(exchangeRate.currency, "string", context.packageName);
                 currency.setText(context.getString(strId))
-                saleRateNB.setText(convertToVisualString(exchangeRate.saleRateNB!!))
-                purchaseRateNB.setText(convertToVisualString(exchangeRate.purchaseRateNB!!))
-                saleRate.setText(convertToVisualString(exchangeRate.saleRate!!))
-                purchaseRate.setText(convertToVisualString(exchangeRate.purchaseRate!!))
+                saleRateNB.setText(convertToVisualString(exchangeRate.saleRateNB))
+                saleRate.setText(convertToVisualString(exchangeRate.saleRate))
+                purchaseRateNB.setText(convertToVisualString(exchangeRate.purchaseRateNB))
+                purchaseRate.setText(convertToVisualString(exchangeRate.purchaseRate))
 
 
 
 
         }
 
-        fun convertToVisualString(d:Double):String{
-            return String.format("%.2f",d)
+        fun convertToVisualString(d:Double?):String{
+            return  if (d!=null) String.format("%.2f",d) else " - "
         }
 
 

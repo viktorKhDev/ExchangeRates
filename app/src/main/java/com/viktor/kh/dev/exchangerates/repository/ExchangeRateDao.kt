@@ -8,14 +8,14 @@ interface ExchangeRateDao {
 
 
     @Query("SELECT * FROM exchangerateroom")
-    fun getAll(): List<ExchangeRateRoom>
+    suspend fun getAll(): List<ExchangeRateRoom>
 
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun insert(exchangeRateRoom: ExchangeRateRoom)
+    suspend fun insert(exchangeRateRoom: ExchangeRateRoom)
 
     @Delete
-    fun delete(exchangeRateRoom: ExchangeRateRoom)
+    suspend fun delete(exchangeRateRoom: ExchangeRateRoom)
 
 
 }

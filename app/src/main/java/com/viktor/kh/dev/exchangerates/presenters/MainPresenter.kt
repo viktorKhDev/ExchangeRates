@@ -68,14 +68,37 @@ class MainPresenter @Inject constructor() {
     fun initFullList(){
         Log.d("MyLog", "start initFullList")
         var list = tempCurrencyPojo.exchangeRate.toMutableList()
+
+
         list.removeAt(0)
         var num: Int = 0
         for (i in 0..list.size-1){
             if(list[i].currency==("UAH")){
                 num = i
             }
+
         }
         list.removeAt(num)
+
+        Log.d("MyLog", "-------------------------------------------------------------------------------------")
+        Log.d("MyLog", list.size.toString())
+        Log.d("MyLog", tempCurrencyPojo.date)
+        Log.d("MyLog", tempCurrencyPojo.bank)
+        Log.d("MyLog", tempCurrencyPojo.baseCurrencyLit)
+        Log.d("MyLog", tempCurrencyPojo.baseCurrency.toString())
+        Log.d("MyLog", "-------------------------------------------------------------------------------------")
+
+
+        for (i in list){
+            Log.d("MyLog", i.currency.toString())
+            Log.d("MyLog", i.purchaseRate.toString())
+            Log.d("MyLog", i.saleRate.toString())
+            Log.d("MyLog", i.purchaseRateNB.toString())
+            Log.d("MyLog", i.saleRateNB.toString())
+            Log.d("MyLog", "------------------------------")
+
+
+        }
         mainView.initFullList(list,tempCurrencyPojo.date)
     }
 

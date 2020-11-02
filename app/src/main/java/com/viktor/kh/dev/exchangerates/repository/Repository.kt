@@ -88,6 +88,8 @@ class Repository @Inject constructor() {
                 ))
             }
 
+          Log.d("MyLog", exchange.size.toString())
+
           if (exchange.isNotEmpty()){
 
             GlobalScope.launch(Dispatchers.Main){

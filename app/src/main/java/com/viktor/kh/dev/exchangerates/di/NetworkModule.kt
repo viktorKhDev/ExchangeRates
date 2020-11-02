@@ -21,7 +21,7 @@ class NetworkModule {
           .addConverterFactory(GsonConverterFactory.create())
           .build()
     }
-
+    @Singleton
     @Provides
     fun provideNetworkService(retrofit: Retrofit):NetworkService{
         return NetworkService(retrofit)

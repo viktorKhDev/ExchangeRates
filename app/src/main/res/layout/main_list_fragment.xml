@@ -128,20 +128,22 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <androidx.recyclerview.widget.RecyclerView
-        android:layout_marginTop="10dp"
-        android:background="@color/colorAccent"
         android:id="@+id/main_list"
         android:layout_width="match_parent"
         android:layout_height="0dp"
+        android:layout_marginTop="10dp"
+        android:background="@color/colorAccent"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintTop_toBottomOf="@id/info_panel"
-        tools:layout_editor_absoluteX="10dp" />
+        app:layout_constraintVertical_bias="1.0"
+        tools:layout_editor_absoluteX="51dp" />
 
     <Button
         app:layout_constraintBottom_toBottomOf="parent"
         android:paddingEnd="5dp"
         android:paddingStart="5dp"
         android:layout_marginBottom="20dp"
+        android:visibility="gone"
         android:id="@+id/get_full_list_btn"
         android:text="@string/much_cur"
         android:textColor="@color/colorWhite"

@@ -58,6 +58,7 @@ class CoursesFragment : MainView, androidx.fragment.app.Fragment() {
             adapter = mainAdapter
         }
         mainAdapter.notifyDataSetChanged()
+        get_full_list_btn.visibility = View.VISIBLE
     }
 
 
