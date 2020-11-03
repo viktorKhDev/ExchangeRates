@@ -35,6 +35,7 @@ class Repository @Inject constructor() {
             val list =  dao.getAll()
 
            if(list.isNotEmpty()){
+               Log.d("MyLog", list.size.toString())
                getForDate(list,date)
            }else{
                getFromNetwork(date)
@@ -44,19 +45,22 @@ class Repository @Inject constructor() {
 
     fun updateDb( tempCurrencyPojo :CurrencyPojo){
         Log.d("MyLog", "start updateDb")
+        Log.d("MyLog", "list for update db size - ${tempCurrencyPojo.exchangeRate.size}-----------------------------------------")
         GlobalScope.launch(Dispatchers.IO) {
             for (i in tempCurrencyPojo.exchangeRate) {
-                    dao.insert(
-                        ExchangeRateRoom(
-                            0,
-                            tempCurrencyPojo.date,
-                            i.baseCurrency,
-                            i.currency,
-                            i.saleRateNB,
-                            i.purchaseRateNB,
-                            i.saleRate,
-                            i.purchaseRate
-                        )
+              var exRoom = ExchangeRateRoom(
+                    null,
+                    tempCurrencyPojo.date,
+                    i.baseCurrency,
+                    i.currency,
+                    i.saleRateNB,
+                    i.purchaseRateNB,
+                    i.saleRate,
+                    i.purchaseRate
+                )
+                dao.insert(
+                       exRoom
+
                     )
             }
         }

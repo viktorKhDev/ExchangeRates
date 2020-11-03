@@ -9,6 +9,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
+import android.widget.Toolbar
 import com.viktor.kh.dev.exchangerates.R
 import com.viktor.kh.dev.exchangerates.adapters.MainAdapter
 import com.viktor.kh.dev.exchangerates.data.ExchangeRate
@@ -35,13 +36,17 @@ class CoursesFragment : MainView, androidx.fragment.app.Fragment() {
         mainPresenter.init(this)
         val bundle: Bundle? = arguments
         if (bundle != null) {
-            mainPresenter.getCourses(bundle.getString("selectedDate",""))
+            val date: String = bundle.getString("selectedDate","")
+            mainPresenter.getCourses(date)
         }
         val getFullListBtn = view.findViewById<Button>(R.id.get_full_list_btn)
         getFullListBtn.setOnClickListener(View.OnClickListener {
             mainPresenter.initFullList()
             get_full_list_btn.visibility = View.GONE
         })
+        
+
+
        return view
 
     }

@@ -11,7 +11,7 @@ interface ExchangeRateDao {
     suspend fun getAll(): List<ExchangeRateRoom>
 
 
-    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    @Insert
     suspend fun insert(exchangeRateRoom: ExchangeRateRoom)
 
     @Delete

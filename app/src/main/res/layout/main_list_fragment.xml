@@ -7,19 +7,20 @@
     tools:context=".ui.MainActivity"
     android:background="@color/colorAccent">
 
-
     <TextView
-        android:id="@+id/text_course"
+        android:id="@+id/text_date"
+        android:textColor="@color/colorWhite"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:gravity="center"
-        android:layout_marginStart="5dp"
-        android:text="@string/course_on"
-        android:textColor="@color/colorWhite"
-        android:textSize="20sp"
         android:layout_marginTop="2dp"
+        android:layout_marginStart="5dp"
+        android:gravity="center"
+        android:textSize="20sp"
+        android:inputType="date"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"/>
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
 
     <androidx.cardview.widget.CardView
         android:id="@+id/info_panel"
@@ -27,7 +28,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         tools:ignore="MissingConstraints"
-        app:layout_constraintTop_toBottomOf="@id/text_course"
+        app:layout_constraintTop_toBottomOf="@id/text_date"
         app:cardElevation="2dp"
         app:cardCornerRadius="4dp"
         >
@@ -114,18 +115,7 @@
 
     </androidx.cardview.widget.CardView>
 
-    <TextView
-        android:id="@+id/text_date"
-        android:textColor="@color/colorWhite"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="2dp"
-        android:layout_marginStart="5dp"
-        android:gravity="center"
-        android:textSize="20sp"
-        android:inputType="date"
-        app:layout_constraintStart_toEndOf="@+id/text_course"
-        app:layout_constraintTop_toTopOf="parent" />
+
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/main_list"
