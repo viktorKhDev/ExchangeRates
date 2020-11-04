@@ -2,6 +2,7 @@ package com.viktor.kh.dev.exchangerates.presenters
 
 import android.content.Context
 import android.util.Log
+import com.viktor.kh.dev.exchangerates.R
 import com.viktor.kh.dev.exchangerates.data.CurrencyPojo
 import com.viktor.kh.dev.exchangerates.data.ExchangeRate
 import com.viktor.kh.dev.exchangerates.data.ExchangeRateRoom
@@ -27,6 +28,8 @@ class MainPresenter @Inject constructor() {
    @Inject
    lateinit var repository: Repository
 
+    var isMainView = true
+
 
     fun init(mainView: MainView){
         App.component.inject(this)
@@ -40,7 +43,10 @@ class MainPresenter @Inject constructor() {
 
     fun setCourses(cur:CurrencyPojo){
         tempCurrencyPojo = cur
-        initShortList()
+        if(isMainView){
+            initShortList()
+        }
+
     }
 
     fun initShortList(){
@@ -64,6 +70,7 @@ class MainPresenter @Inject constructor() {
 
     }
 
+
     fun initFullList(){
         Log.d("MyLog", "start initFullList")
         var list = tempCurrencyPojo.exchangeRate.toMutableList()
@@ -79,6 +86,11 @@ class MainPresenter @Inject constructor() {
         }
         list.removeAt(num)
         mainView.initFullList(list,tempCurrencyPojo.date)
+    }
+
+    fun errorGetData(){
+        mainView.error(context.getString(R.string.error_get_data))
+
     }
 
 

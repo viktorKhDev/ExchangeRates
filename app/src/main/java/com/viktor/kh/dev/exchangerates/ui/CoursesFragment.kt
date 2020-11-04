@@ -1,6 +1,7 @@
 package com.viktor.kh.dev.exchangerates.ui
 
 
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import androidx.fragment.app.Fragment
@@ -9,6 +10,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
+import android.widget.Toast
 import android.widget.Toolbar
 import com.viktor.kh.dev.exchangerates.R
 import com.viktor.kh.dev.exchangerates.adapters.MainAdapter
@@ -79,17 +81,25 @@ class CoursesFragment : MainView, androidx.fragment.app.Fragment() {
         mainAdapter.notifyDataSetChanged()
     }
 
+    override fun onStop() {
+        super.onStop()
+        mainPresenter.isMainView = false
+    }
 
 
+    override fun onResume() {
+        super.onResume()
+        if(mainPresenter.isMainView==false&&mainAdapter.itemCount==0){
+            mainPresenter.isMainView = true
+            mainPresenter.initShortList()
 
+        }
+    }
 
+    override fun error(text: String) {
+        Toast.makeText(requireContext(),text,Toast.LENGTH_LONG).show()
 
-
-
-
-
-
-
+    }
 
 
 }

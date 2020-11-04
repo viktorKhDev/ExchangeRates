@@ -52,7 +52,7 @@ class NetworkService {
 
                override fun onFailure(call: Call<CurrencyPojo>, t: Throwable) {
                    Log.d("MyLog","onFailure  - ${t.message}")
-
+                   mainPresenter.errorGetData()
 
                }
 

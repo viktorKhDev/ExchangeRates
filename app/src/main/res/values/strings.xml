@@ -37,6 +37,7 @@
     <string name="sale_rate_pb">Продажа банк</string>
     <string name="purchase_rate_pb">Покупка банк</string>
     <string name="much_cur">больше валют</string>
+    <string name="error_get_data">Не удается получить данные!</string>
 
 
 </resources>

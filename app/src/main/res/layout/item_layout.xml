@@ -84,7 +84,21 @@
         app:layout_constraintStart_toEndOf="@+id/sale_rate"
         app:layout_constraintTop_toTopOf="parent" />
 
+    <com.jjoe64.graphview.GraphView
+        android:id="@+id/graph_container"
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
+        android:orientation="horizontal"
+        android:layout_margin="2dp"
+        app:layout_constraintTop_toBottomOf="@id/purchase_rate"
+        android:visibility="visible"
+        >
+
+    </com.jjoe64.graphview.GraphView>
+
 </androidx.constraintlayout.widget.ConstraintLayout>
+
+
 
 </androidx.cardview.widget.CardView>
 
