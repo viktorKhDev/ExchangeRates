@@ -2,19 +2,16 @@ package com.viktor.kh.dev.exchangerates.presenters
 
 import android.content.Context
 import android.util.Log
+import com.jjoe64.graphview.series.DataPoint
+import com.jjoe64.graphview.series.LineGraphSeries
 import com.viktor.kh.dev.exchangerates.R
 import com.viktor.kh.dev.exchangerates.data.CurrencyPojo
 import com.viktor.kh.dev.exchangerates.data.ExchangeRate
-import com.viktor.kh.dev.exchangerates.data.ExchangeRateRoom
 import com.viktor.kh.dev.exchangerates.di.App
-import com.viktor.kh.dev.exchangerates.repository.ExchangeRateDao
 import com.viktor.kh.dev.exchangerates.repository.Repository
 import com.viktor.kh.dev.exchangerates.services.network.NetworkService
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.launch
 import javax.inject.Inject
-import kotlin.concurrent.thread
+
 
 
 class MainPresenter @Inject constructor() {
@@ -94,7 +91,14 @@ class MainPresenter @Inject constructor() {
     }
 
 
+    fun getDataForGraph(currencyName: String) {
+         repository.getDataForGraph(currencyName)
+    }
 
+
+    fun setGraph(list:LineGraphSeries<DataPoint>) {
+        mainView.openGraph(list)
+   }
 
 
 

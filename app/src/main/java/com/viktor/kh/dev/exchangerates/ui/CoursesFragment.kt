@@ -1,17 +1,16 @@
 package com.viktor.kh.dev.exchangerates.ui
 
 
-import android.content.Intent
+
 import android.os.Bundle
 import android.util.Log
-import androidx.fragment.app.Fragment
-import androidx.recyclerview.widget.LinearLayoutManager
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.Toast
-import android.widget.Toolbar
+import com.jjoe64.graphview.series.DataPoint
+import com.jjoe64.graphview.series.LineGraphSeries
 import com.viktor.kh.dev.exchangerates.R
 import com.viktor.kh.dev.exchangerates.adapters.MainAdapter
 import com.viktor.kh.dev.exchangerates.data.ExchangeRate
@@ -99,6 +98,12 @@ class CoursesFragment : MainView, androidx.fragment.app.Fragment() {
     override fun error(text: String) {
         Toast.makeText(requireContext(),text,Toast.LENGTH_LONG).show()
 
+    }
+
+
+
+    override fun openGraph(list: LineGraphSeries<DataPoint>) {
+        //graph opening function
     }
 
 

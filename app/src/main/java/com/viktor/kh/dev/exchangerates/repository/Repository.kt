@@ -1,15 +1,19 @@
 package com.viktor.kh.dev.exchangerates.repository
 
 import android.util.Log
+import com.jjoe64.graphview.series.DataPoint
+import com.jjoe64.graphview.series.LineGraphSeries
 import com.viktor.kh.dev.exchangerates.data.CurrencyPojo
 import com.viktor.kh.dev.exchangerates.data.ExchangeRate
 import com.viktor.kh.dev.exchangerates.data.ExchangeRateRoom
 import com.viktor.kh.dev.exchangerates.di.App
 import com.viktor.kh.dev.exchangerates.presenters.MainPresenter
+import com.viktor.kh.dev.exchangerates.services.graph.GraphData
 import com.viktor.kh.dev.exchangerates.services.network.NetworkService
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
+import java.util.*
 import javax.inject.Inject
 
 class Repository @Inject constructor() {
@@ -68,7 +72,7 @@ class Repository @Inject constructor() {
     }
 
 
-    fun getFromNetwork(date: String){
+     private fun getFromNetwork(date: String){
         Log.d("MyLog", "start getFromNetwork")
        GlobalScope.launch(Dispatchers.Main){
            networkService.getAllCourses(date)
@@ -77,7 +81,7 @@ class Repository @Inject constructor() {
    }
 
 
-      fun getForDate(list: List<ExchangeRateRoom>,date: String) {
+     private fun getForDate(list: List<ExchangeRateRoom>,date: String) {
           Log.d("MyLog", "start getForDate")
       val exchange = mutableListOf<ExchangeRate>()
             for(i in list){
@@ -110,6 +114,15 @@ class Repository @Inject constructor() {
               getFromNetwork(date)
           }
       }
+
+
+
+    fun getDataForGraph(currencyName: String){
+       GlobalScope.launch (Dispatchers.IO){
+           GraphData(mainPresenter).getGraph(currencyName)
+       }
+
+    }
 
 
 }
