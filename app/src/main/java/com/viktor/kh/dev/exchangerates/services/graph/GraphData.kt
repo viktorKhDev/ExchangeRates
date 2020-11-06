@@ -1,5 +1,6 @@
 package com.viktor.kh.dev.exchangerates.services.graph
 
+import android.util.Log
 import com.jjoe64.graphview.series.DataPoint
 import com.jjoe64.graphview.series.LineGraphSeries
 import com.viktor.kh.dev.exchangerates.data.ExchangeRateRoom
@@ -7,7 +8,7 @@ import com.viktor.kh.dev.exchangerates.di.App
 import com.viktor.kh.dev.exchangerates.presenters.MainPresenter
 import com.viktor.kh.dev.exchangerates.repository.ExchangeRateDao
 import com.viktor.kh.dev.exchangerates.repository.Repository
-import com.viktor.kh.dev.exchangerates.utils.CurrencyGraph
+import com.viktor.kh.dev.exchangerates.data.CurrencyGraph
 import com.viktor.kh.dev.exchangerates.utils.DATE_FORMAT
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
@@ -34,23 +35,15 @@ class GraphData constructor(_presenter: MainPresenter) {
         presenter = _presenter
     }
 
-
-
     var list = mutableListOf<DataPoint>()
 
 
-
-
-   suspend fun getGraph(currencyName: String){
+    suspend fun getGraph(currencyName: String){
       var list = dao.getForCurrency(currencyName)
        var graphList = getSortList(list)
        GlobalScope.launch (Dispatchers.Main){
-           presenter.setGraph(graphList)
+           presenter.setGraph(graphList,currencyName)
        }
-
-
-
-
 
     }
 
@@ -65,12 +58,16 @@ class GraphData constructor(_presenter: MainPresenter) {
             }
 
         }
-         listGraph.sort()
-        var l  = mutableListOf<DataPoint>()
-        for (i in listGraph){
-            l.add(DataPoint(Date(i.date),i.value))
+         listGraph.sortBy { i -> i.date }
+
+        var l = Array(listGraph.size){ i -> DataPoint(Date(listGraph[i].date),listGraph[i].value) }
+
+
+        Log.d("MyLog", "GraphSize =  ${l.size}")
+        for (i in l){
+            Log.d("MyLog", "GraphData =  ${i.x} , ${i.y}")
         }
-       var readyList = LineGraphSeries()
+        return LineGraphSeries(l)
     }
 
 

@@ -13,6 +13,7 @@ import com.jjoe64.graphview.series.DataPoint
 import com.jjoe64.graphview.series.LineGraphSeries
 import com.viktor.kh.dev.exchangerates.R
 import com.viktor.kh.dev.exchangerates.adapters.MainAdapter
+import com.viktor.kh.dev.exchangerates.data.DataForAdapter
 import com.viktor.kh.dev.exchangerates.data.ExchangeRate
 import com.viktor.kh.dev.exchangerates.di.App
 import com.viktor.kh.dev.exchangerates.presenters.MainPresenter
@@ -54,10 +55,10 @@ class CoursesFragment : MainView, androidx.fragment.app.Fragment() {
 
 
 
-    override fun initShortList(list: List<ExchangeRate>,date: String) {
+    override fun initShortList(list: List<DataForAdapter>,date: String) {
         Log.d("MyLog", " initShortList list size in fragment = ${list.size}")
         text_date.text = date
-        mainAdapter = MainAdapter(requireContext(),list)
+        mainAdapter = MainAdapter(requireContext(),list,mainPresenter)
         main_list.apply {
             layoutManager =
                 androidx.recyclerview.widget.LinearLayoutManager(context)
@@ -68,16 +69,17 @@ class CoursesFragment : MainView, androidx.fragment.app.Fragment() {
     }
 
 
-    override fun initFullList(list: List<ExchangeRate>,date: String){
+    override fun initFullList(list: List<DataForAdapter>,date: String){
         Log.d("MyLog", " initFullList  list size in fragment = ${list.size}")
         text_date.text = date
-        mainAdapter = MainAdapter(requireContext(),list)
+        mainAdapter = MainAdapter(requireContext(),list,mainPresenter)
         main_list.apply {
             layoutManager =
                 androidx.recyclerview.widget.LinearLayoutManager(context)
             adapter = mainAdapter
         }
         mainAdapter.notifyDataSetChanged()
+        get_full_list_btn.visibility = View.GONE
     }
 
     override fun onStop() {
@@ -102,7 +104,7 @@ class CoursesFragment : MainView, androidx.fragment.app.Fragment() {
 
 
 
-    override fun openGraph(list: LineGraphSeries<DataPoint>) {
+    override fun openGraph(list: List<DataForAdapter>) {
         //graph opening function
     }
 

@@ -6,10 +6,12 @@ import com.jjoe64.graphview.series.DataPoint
 import com.jjoe64.graphview.series.LineGraphSeries
 import com.viktor.kh.dev.exchangerates.R
 import com.viktor.kh.dev.exchangerates.data.CurrencyPojo
+import com.viktor.kh.dev.exchangerates.data.DataForAdapter
 import com.viktor.kh.dev.exchangerates.data.ExchangeRate
 import com.viktor.kh.dev.exchangerates.di.App
 import com.viktor.kh.dev.exchangerates.repository.Repository
 import com.viktor.kh.dev.exchangerates.services.network.NetworkService
+import java.text.FieldPosition
 import javax.inject.Inject
 
 
@@ -63,7 +65,7 @@ class MainPresenter @Inject constructor() {
             }
         }
 
-        mainView.initShortList(newList,tempCurrencyPojo.date)
+        mainView.initShortList(concatLists(newList,null,null),tempCurrencyPojo.date)
 
     }
 
@@ -82,7 +84,7 @@ class MainPresenter @Inject constructor() {
 
         }
         list.removeAt(num)
-        mainView.initFullList(list,tempCurrencyPojo.date)
+        mainView.initFullList(concatLists(list,null,null),tempCurrencyPojo.date)
     }
 
     fun errorGetData(){
@@ -91,14 +93,36 @@ class MainPresenter @Inject constructor() {
     }
 
 
-    fun getDataForGraph(currencyName: String) {
+    fun getDataForGraph(currencyName: String,position: Int) {
+        Log.d("MyLog", "currencyName = ${currencyName}")
          repository.getDataForGraph(currencyName)
     }
 
 
-    fun setGraph(list:LineGraphSeries<DataPoint>) {
-        mainView.openGraph(list)
+    fun setGraph(list:LineGraphSeries<DataPoint>,currencyName: String) {
+
+        mainView.openGraph(concatLists(tempCurrencyPojo.exchangeRate,list,currencyName))
    }
+
+
+    private fun concatLists(exchangeRates: List<ExchangeRate>,graphList:LineGraphSeries<DataPoint>?,currencyName: String?):List<DataForAdapter> {
+        var dataList = mutableListOf<DataForAdapter>()
+        if (graphList==null||currencyName==null){
+            for (i in exchangeRates){
+                dataList.add(DataForAdapter(i,null))
+            }
+        }else{
+            for (i in exchangeRates){
+                if(i.currency!=currencyName){
+                    dataList.add(DataForAdapter(i,null))
+                }else{
+                    dataList.add(DataForAdapter(i,graphList))
+                }
+
+            }
+        }
+        return dataList
+    }
 
 
 
