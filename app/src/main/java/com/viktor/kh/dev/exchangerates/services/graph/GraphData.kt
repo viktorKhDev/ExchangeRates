@@ -47,7 +47,7 @@ class GraphData constructor(_presenter: MainPresenter) {
 
     }
 
-    private suspend fun getSortList(list: List<ExchangeRateRoom>):LineGraphSeries<DataPoint>{
+    private  fun getSortList(list: List<ExchangeRateRoom>):LineGraphSeries<DataPoint>{
        var listGraph = mutableListOf<CurrencyGraph>()
         val format = SimpleDateFormat(DATE_FORMAT,Locale.ENGLISH)
         for (i in list){
@@ -70,6 +70,10 @@ class GraphData constructor(_presenter: MainPresenter) {
         return LineGraphSeries(l)
     }
 
+
+    private fun convertToVisualDouble(d:Double):Double{
+        return  (String.format("%.2f",d)).toDouble()
+    }
 
 
 

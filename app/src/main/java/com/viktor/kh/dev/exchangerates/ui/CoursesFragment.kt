@@ -9,12 +9,9 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.Toast
-import com.jjoe64.graphview.series.DataPoint
-import com.jjoe64.graphview.series.LineGraphSeries
 import com.viktor.kh.dev.exchangerates.R
 import com.viktor.kh.dev.exchangerates.adapters.MainAdapter
-import com.viktor.kh.dev.exchangerates.data.DataForAdapter
-import com.viktor.kh.dev.exchangerates.data.ExchangeRate
+import com.viktor.kh.dev.exchangerates.data.DataForCourses
 import com.viktor.kh.dev.exchangerates.di.App
 import com.viktor.kh.dev.exchangerates.presenters.MainPresenter
 import com.viktor.kh.dev.exchangerates.presenters.MainView
@@ -43,7 +40,8 @@ class CoursesFragment : MainView, androidx.fragment.app.Fragment() {
         }
         val getFullListBtn = view.findViewById<Button>(R.id.get_full_list_btn)
         getFullListBtn.setOnClickListener(View.OnClickListener {
-            mainPresenter.initFullList()
+            mainPresenter.isShortList = false
+            mainPresenter.initList()
             get_full_list_btn.visibility = View.GONE
         })
         
@@ -55,32 +53,26 @@ class CoursesFragment : MainView, androidx.fragment.app.Fragment() {
 
 
 
-    override fun initShortList(list: List<DataForAdapter>,date: String) {
-        Log.d("MyLog", " initShortList list size in fragment = ${list.size}")
-        text_date.text = date
-        mainAdapter = MainAdapter(requireContext(),list,mainPresenter)
+    override fun initList(dataForFragment: DataForCourses) {
+        Log.d("MyLog", " initList list size in fragment = ${dataForFragment.exchangeRates.size}")
+        text_date.text = dataForFragment.date
+        mainAdapter = MainAdapter(requireContext(),dataForFragment,mainPresenter)
         main_list.apply {
             layoutManager =
                 androidx.recyclerview.widget.LinearLayoutManager(context)
             adapter = mainAdapter
         }
         mainAdapter.notifyDataSetChanged()
-        get_full_list_btn.visibility = View.VISIBLE
-    }
 
-
-    override fun initFullList(list: List<DataForAdapter>,date: String){
-        Log.d("MyLog", " initFullList  list size in fragment = ${list.size}")
-        text_date.text = date
-        mainAdapter = MainAdapter(requireContext(),list,mainPresenter)
-        main_list.apply {
-            layoutManager =
-                androidx.recyclerview.widget.LinearLayoutManager(context)
-            adapter = mainAdapter
+        if(mainPresenter.isShortList == true){
+            get_full_list_btn.visibility = View.VISIBLE
+        }else{
+            get_full_list_btn.visibility = View.GONE
         }
-        mainAdapter.notifyDataSetChanged()
-        get_full_list_btn.visibility = View.GONE
+
     }
+
+
 
     override fun onStop() {
         super.onStop()
@@ -92,7 +84,10 @@ class CoursesFragment : MainView, androidx.fragment.app.Fragment() {
         super.onResume()
         if(mainPresenter.isMainView==false&&mainAdapter.itemCount==0){
             mainPresenter.isMainView = true
-            mainPresenter.initShortList()
+            mainPresenter.initList()
+            if (!mainPresenter.isShortList){
+                get_full_list_btn.visibility = View.GONE
+            }
 
         }
     }
@@ -104,9 +99,7 @@ class CoursesFragment : MainView, androidx.fragment.app.Fragment() {
 
 
 
-    override fun openGraph(list: List<DataForAdapter>) {
-        //graph opening function
-    }
+
 
 
 }

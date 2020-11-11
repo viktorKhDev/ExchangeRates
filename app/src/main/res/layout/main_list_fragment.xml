@@ -49,37 +49,25 @@
                 android:text="@string/cur_info"
                 android:textColor="@color/colorWhite"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toStartOf="@+id/sale_rate_nb"
+                app:layout_constraintEnd_toStartOf="@+id/rate_nb"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
+
+
+
             <TextView
-                android:id="@+id/sale_rate_nb"
+                android:id="@+id/rate_nb"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:gravity="center"
                 android:padding="3dp"
                 android:textSize="10sp"
-                android:text="@string/sale_rate_nb"
-                android:textColor="@color/colorWhite"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toStartOf="@+id/purchase_rate_nb"
-                app:layout_constraintStart_toEndOf="@+id/currency"
-                app:layout_constraintTop_toTopOf="parent" />
-
-
-            <TextView
-                android:id="@+id/purchase_rate_nb"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:gravity="center"
-                android:padding="3dp"
-                android:textSize="10sp"
-                android:text="@string/purchase_rate_nb"
+                android:text="@string/n_b_u"
                 android:textColor="@color/colorWhite"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toStartOf="@id/sale_rate"
-                app:layout_constraintStart_toEndOf="@+id/sale_rate_nb"
+                app:layout_constraintStart_toEndOf="@+id/currency"
                 app:layout_constraintTop_toTopOf="parent" />
 
 
@@ -94,7 +82,7 @@
                 android:textColor="@color/colorWhite"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toStartOf="@id/purchase_rate"
-                app:layout_constraintStart_toEndOf="@+id/purchase_rate_nb"
+                app:layout_constraintStart_toEndOf="@+id/rate_nb"
                 app:layout_constraintTop_toTopOf="parent" />
 
             <TextView

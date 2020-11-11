@@ -1,24 +1,37 @@
 package com.viktor.kh.dev.exchangerates.adapters
 
 import android.content.Context
+import android.text.format.DateFormat
 import androidx.recyclerview.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import com.jjoe64.graphview.GraphView
+import com.jjoe64.graphview.helper.DateAsXAxisLabelFormatter
+import com.jjoe64.graphview.series.DataPoint
+import com.jjoe64.graphview.series.LineGraphSeries
 import com.viktor.kh.dev.exchangerates.R
-import com.viktor.kh.dev.exchangerates.data.ExchangeRate
+import com.viktor.kh.dev.exchangerates.data.DataForCourses
 import com.viktor.kh.dev.exchangerates.presenters.MainPresenter
-import com.viktor.kh.dev.exchangerates.data.DataForAdapter
+
+import com.viktor.kh.dev.exchangerates.data.ExchangeRate
+import com.viktor.kh.dev.exchangerates.utils.DATE_FORMAT
+import java.text.SimpleDateFormat
 import javax.inject.Inject
 
 
-class MainAdapter @Inject constructor(_context:Context, _list:List<DataForAdapter>, _presenter: MainPresenter) : RecyclerView.Adapter<MainAdapter.ViewHolder>() {
+class MainAdapter @Inject constructor(_context:Context, dataForFragment: DataForCourses, _presenter: MainPresenter) : RecyclerView.Adapter<MainAdapter.ViewHolder>() {
 
-       val list = _list.toMutableList()
-       val context = _context;
-       val presenter =  _presenter
+
+
+
+
+
+      val mapForGraph: Map<String, LineGraphSeries<DataPoint>>? = dataForFragment.mapForGraph
+       val list = dataForFragment.exchangeRates
+       val context = _context
+    val presenter =  _presenter
 
 
 
@@ -33,18 +46,30 @@ class MainAdapter @Inject constructor(_context:Context, _list:List<DataForAdapte
 
 
     override fun getItemCount(): Int {
-       return list.size
+        return list.size
+
     }
 
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         var listItem  = list.get(position)
-        holder.bind(listItem,context)
 
+        if (mapForGraph != null) {
+            if(mapForGraph.contains(listItem.currency)){
+
+                holder.bind(listItem,context,mapForGraph.get(listItem.currency))
+
+            }else{
+                holder.bind(listItem,context,null)
+            }
+
+        }else{
+            holder.bind(listItem,context,null)
+
+        }
         holder.itemView.setOnClickListener(View.OnClickListener {
 
-                presenter.getDataForGraph(holder.curName,holder.adapterPosition)
-
+            presenter.getDataForGraph(holder.curName)
 
         })
 
@@ -52,12 +77,8 @@ class MainAdapter @Inject constructor(_context:Context, _list:List<DataForAdapte
 
     class ViewHolder (view: View) : RecyclerView.ViewHolder(view) {
 
-        var graphVisibility = false
-
-
         val currency = view.findViewById<TextView>(R.id.currency)
-        val saleRateNB = view.findViewById<TextView>(R.id.sale_rate_nb)
-        val purchaseRateNB = view.findViewById<TextView>(R.id.purchase_rate_nb)
+        val rateateNB = view.findViewById<TextView>(R.id.rate_nb)
         val saleRate = view.findViewById<TextView>(R.id.sale_rate)
         val purchaseRate = view.findViewById<TextView>(R.id.purchase_rate)
         val graph : GraphView = view.findViewById(R.id.graph_container)
@@ -70,26 +91,47 @@ class MainAdapter @Inject constructor(_context:Context, _list:List<DataForAdapte
 
 
 
-        fun bind (dataForAdapter: DataForAdapter,context: Context){
+        fun bind (exchangeRate: ExchangeRate, context: Context, graphSeries: LineGraphSeries<DataPoint>?){
 
-             val exchangeRate = dataForAdapter.exchangeRate
-
-
-            var strId :Int = context.getResources().getIdentifier(exchangeRate.currency, "string", context.packageName);
-            currency.setText(context.getString(strId))
-            saleRateNB.setText(convertToVisualString(exchangeRate.saleRateNB))
-            saleRate.setText(convertToVisualString(exchangeRate.saleRate))
-            purchaseRateNB.setText(convertToVisualString(exchangeRate.purchaseRateNB))
-            purchaseRate.setText(convertToVisualString(exchangeRate.purchaseRate))
-            if (dataForAdapter.initGraph!=null){
-                graph.visibility = View.VISIBLE
-            }else{
-                graph.visibility = View.GONE
-            }
-
+            var strId :Int = context.resources.getIdentifier(exchangeRate.currency, "string", context.packageName)
+            currency.text = context.getString(strId)
+            rateateNB.text = convertToVisualString(exchangeRate.saleRateNB)
+            saleRate.text = convertToVisualString(exchangeRate.saleRate)
+            purchaseRate.text = convertToVisualString(exchangeRate.purchaseRate)
 
             curName = exchangeRate.currency.toString()
 
+            if (graphSeries!=null){
+                graph.visibility = View.VISIBLE
+
+                graph.addSeries(graphSeries)
+
+                // set date label formatter
+                graph.gridLabelRenderer.labelFormatter = DateAsXAxisLabelFormatter(context,SimpleDateFormat(DATE_FORMAT))
+                graph.gridLabelRenderer.numHorizontalLabels = 3 // only 4 because of the space
+
+                // set manual x bounds to have nice steps
+              graph.viewport.setMinX(graphSeries.lowestValueX)
+                graph.viewport.setMaxX(graphSeries.highestValueX)
+                graph.viewport.isXAxisBoundsManual = true
+
+                graph.viewport.isYAxisBoundsManual = true
+                graph.viewport.setMinY(graphSeries.lowestValueY)
+                graph.viewport.setMaxY(graphSeries.highestValueY)
+
+
+               /* graph.viewport.isScrollable = true // enables horizontal scrolling
+                  graph.viewport.setScrollableY(true) // enables vertical scrolling
+                  graph.viewport.isScalable = true // enables horizontal zooming and scrolling
+                  graph.viewport.setScalableY(true) // enables vertical zooming and scrolling
+*/
+
+           // as we use dates as labels, the human rounding to nice readable numbers
+           // is not necessary
+                graph.gridLabelRenderer.setHumanRounding(false)
+            }else{
+                graph.visibility = View.GONE
+            }
 
 
         }

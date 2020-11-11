@@ -6,17 +6,18 @@ import com.jjoe64.graphview.series.DataPoint
 import com.jjoe64.graphview.series.LineGraphSeries
 import com.viktor.kh.dev.exchangerates.R
 import com.viktor.kh.dev.exchangerates.data.CurrencyPojo
-import com.viktor.kh.dev.exchangerates.data.DataForAdapter
+import com.viktor.kh.dev.exchangerates.data.DataForCourses
 import com.viktor.kh.dev.exchangerates.data.ExchangeRate
 import com.viktor.kh.dev.exchangerates.di.App
 import com.viktor.kh.dev.exchangerates.repository.Repository
 import com.viktor.kh.dev.exchangerates.services.network.NetworkService
-import java.text.FieldPosition
 import javax.inject.Inject
 
 
 
 class MainPresenter @Inject constructor() {
+
+    var isMainView = true
 
     lateinit var tempCurrencyPojo: CurrencyPojo
     lateinit var mainView: MainView
@@ -25,9 +26,19 @@ class MainPresenter @Inject constructor() {
     @Inject
     lateinit var networkService: NetworkService
    @Inject
-   lateinit var repository: Repository
+    lateinit var repository: Repository
 
-    var isMainView = true
+
+    //checking the size of the list on the screen
+        var isShortList = true
+
+
+     lateinit var dataForFragment: DataForCourses
+
+
+
+
+
 
 
     fun init(mainView: MainView){
@@ -43,9 +54,24 @@ class MainPresenter @Inject constructor() {
     fun setCourses(cur:CurrencyPojo){
         tempCurrencyPojo = cur
         if(isMainView){
-            initShortList()
+            initList()
         }
 
+    }
+
+
+
+
+    fun initList(){
+
+            if (isShortList){
+                initShortList()
+            }else{
+                initFullList()
+            }
+
+
+        mainView.initList(dataForFragment)
     }
 
     fun initShortList(){
@@ -65,12 +91,27 @@ class MainPresenter @Inject constructor() {
             }
         }
 
-        mainView.initShortList(concatLists(newList,null,null),tempCurrencyPojo.date)
 
+        Log.d("MyLog", "list size after = ${newList.size}")
+
+        if (this::dataForFragment.isInitialized){
+            val data = dataForFragment
+
+            dataForFragment = DataForCourses(data.date,data.mapForGraph,newList)
+        }
+        else{
+            dataForFragment = DataForCourses(tempCurrencyPojo.date,null,newList)
+        }
+
+        isShortList = true
     }
 
 
+
+
+
     fun initFullList(){
+
         Log.d("MyLog", "start initFullList")
         var list = tempCurrencyPojo.exchangeRate.toMutableList()
 
@@ -84,7 +125,38 @@ class MainPresenter @Inject constructor() {
 
         }
         list.removeAt(num)
-        mainView.initFullList(concatLists(list,null,null),tempCurrencyPojo.date)
+
+
+        if (this::dataForFragment.isInitialized){
+            val data = dataForFragment
+
+            dataForFragment = DataForCourses(data.date,data.mapForGraph,list)
+        }
+        else{
+            dataForFragment = DataForCourses(tempCurrencyPojo.date,null,list)
+        }
+
+
+        isShortList = false
+
+
+    }
+
+    fun setGraph(list:LineGraphSeries<DataPoint>,currencyName: String) {
+        val map = mutableMapOf<String,LineGraphSeries<DataPoint>>()
+        if (dataForFragment.mapForGraph!=null){
+            for (i in dataForFragment.mapForGraph!!){
+                map.put(i.key,i.value)
+            }
+        }
+
+        map.put(currencyName,list)
+
+        val data = dataForFragment
+
+        dataForFragment = DataForCourses(data.date,map,data.exchangeRates)
+
+        initList()
     }
 
     fun errorGetData(){
@@ -93,35 +165,20 @@ class MainPresenter @Inject constructor() {
     }
 
 
-    fun getDataForGraph(currencyName: String,position: Int) {
+    fun getDataForGraph(currencyName: String) {
         Log.d("MyLog", "currencyName = ${currencyName}")
-         repository.getDataForGraph(currencyName)
-    }
-
-
-    fun setGraph(list:LineGraphSeries<DataPoint>,currencyName: String) {
-
-        mainView.openGraph(concatLists(tempCurrencyPojo.exchangeRate,list,currencyName))
-   }
-
-
-    private fun concatLists(exchangeRates: List<ExchangeRate>,graphList:LineGraphSeries<DataPoint>?,currencyName: String?):List<DataForAdapter> {
-        var dataList = mutableListOf<DataForAdapter>()
-        if (graphList==null||currencyName==null){
-            for (i in exchangeRates){
-                dataList.add(DataForAdapter(i,null))
+        if (dataForFragment.mapForGraph!=null){
+            if(dataForFragment.mapForGraph!!.containsKey(currencyName)){
+                dataForFragment.mapForGraph!!.remove(currencyName)
+                initList()
+            }else{
+                repository.getDataForGraph(currencyName)
             }
         }else{
-            for (i in exchangeRates){
-                if(i.currency!=currencyName){
-                    dataList.add(DataForAdapter(i,null))
-                }else{
-                    dataList.add(DataForAdapter(i,graphList))
-                }
-
-            }
+            repository.getDataForGraph(currencyName)
         }
-        return dataList
+
+
     }
 
 
