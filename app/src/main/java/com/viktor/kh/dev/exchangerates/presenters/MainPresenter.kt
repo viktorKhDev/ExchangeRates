@@ -74,13 +74,13 @@ class MainPresenter @Inject constructor() {
         mainView.initList(dataForFragment)
     }
 
-    fun initShortList(){
+    private fun initShortList(){
         Log.d("MyLog", "start initShortList")
         var list = tempCurrencyPojo.exchangeRate.toMutableList()
         Log.d("MyLog", "list size = ${list.size}")
         var newList =  mutableListOf<ExchangeRate>()
 
-        for (i in 0..list.size-1){
+        for (i in 0 until list.size){
             if(list[i].currency==("USD")
                 ||list[i].currency==("EUR")
                 ||list[i].currency==("GBP")
@@ -110,30 +110,48 @@ class MainPresenter @Inject constructor() {
 
 
 
-    fun initFullList(){
+    private fun initFullList(){
 
         Log.d("MyLog", "start initFullList")
         var list = tempCurrencyPojo.exchangeRate.toMutableList()
 
-
         list.removeAt(0)
-        var num: Int = 0
-        for (i in 0..list.size-1){
+
+         var i  = 0
+
+        while (i<list.size){
+            if(list[i].currency==("UAH")){
+                list.removeAt(i)
+                continue
+            }
+            if (list[i].currency==null){
+                list.removeAt(i)
+               continue
+            }
+            i += 1
+        }
+      /*  var num: Int = 0
+        for (i in 0 until list.size){
             if(list[i].currency==("UAH")){
                 num = i
             }
+            if (list[i].currency==null){
+                list.removeAt(i)
 
+            }
         }
-        list.removeAt(num)
+        list.removeAt(num)*/
 
 
-        if (this::dataForFragment.isInitialized){
+            Log.d("MyLog", "full list size = ${list.size}")
+
+
+        dataForFragment = if (this::dataForFragment.isInitialized){
             val data = dataForFragment
 
-            dataForFragment = DataForCourses(data.date,data.mapForGraph,list)
-        }
-        else{
-            dataForFragment = DataForCourses(tempCurrencyPojo.date,null,list)
+            DataForCourses(data.date,data.mapForGraph,list)
+        } else{
+            DataForCourses(tempCurrencyPojo.date,null,list)
         }
 
 

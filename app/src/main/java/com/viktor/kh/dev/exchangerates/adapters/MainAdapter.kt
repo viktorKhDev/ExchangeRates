@@ -1,12 +1,15 @@
 package com.viktor.kh.dev.exchangerates.adapters
 
 import android.content.Context
+import android.content.res.Resources
 import android.text.format.DateFormat
+import android.util.Log
 import androidx.recyclerview.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import android.widget.Toast
 import com.jjoe64.graphview.GraphView
 import com.jjoe64.graphview.helper.DateAsXAxisLabelFormatter
 import com.jjoe64.graphview.series.DataPoint
@@ -17,6 +20,8 @@ import com.viktor.kh.dev.exchangerates.presenters.MainPresenter
 
 import com.viktor.kh.dev.exchangerates.data.ExchangeRate
 import com.viktor.kh.dev.exchangerates.utils.DATE_FORMAT
+import java.lang.Exception
+import java.lang.NullPointerException
 import java.text.SimpleDateFormat
 import javax.inject.Inject
 
@@ -25,18 +30,10 @@ class MainAdapter @Inject constructor(_context:Context, dataForFragment: DataFor
 
 
 
-
-
-
-      val mapForGraph: Map<String, LineGraphSeries<DataPoint>>? = dataForFragment.mapForGraph
+    val mapForGraph: Map<String, LineGraphSeries<DataPoint>>? = dataForFragment.mapForGraph
        val list = dataForFragment.exchangeRates
        val context = _context
     val presenter =  _presenter
-
-
-
-
-
 
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -52,26 +49,29 @@ class MainAdapter @Inject constructor(_context:Context, dataForFragment: DataFor
 
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        var listItem  = list.get(position)
+        var listItem  = list[position]
+        if (listItem.currency!=null){
+            if (mapForGraph != null) {
+                if(mapForGraph.contains(listItem.currency)){
 
-        if (mapForGraph != null) {
-            if(mapForGraph.contains(listItem.currency)){
+                    holder.bind(listItem,context,mapForGraph.get(listItem.currency))
 
-                holder.bind(listItem,context,mapForGraph.get(listItem.currency))
+                }else{
+                    holder.bind(listItem,context,null)
+                }
 
             }else{
                 holder.bind(listItem,context,null)
-            }
 
-        }else{
-            holder.bind(listItem,context,null)
+            }
+            holder.itemView.setOnClickListener(View.OnClickListener {
+
+                presenter.getDataForGraph(holder.curName)
+
+            })
 
         }
-        holder.itemView.setOnClickListener(View.OnClickListener {
 
-            presenter.getDataForGraph(holder.curName)
-
-        })
 
     }
 
@@ -92,52 +92,50 @@ class MainAdapter @Inject constructor(_context:Context, dataForFragment: DataFor
 
 
         fun bind (exchangeRate: ExchangeRate, context: Context, graphSeries: LineGraphSeries<DataPoint>?){
+            if (exchangeRate.currency!=null){
+                var strId :Int = context.resources.getIdentifier(exchangeRate.currency, "string", context.packageName)
+                currency.text = context.getString(strId)
+                rateateNB.text = convertToVisualString(exchangeRate.saleRateNB)
+                saleRate.text = convertToVisualString(exchangeRate.saleRate)
+                purchaseRate.text = convertToVisualString(exchangeRate.purchaseRate)
 
-            var strId :Int = context.resources.getIdentifier(exchangeRate.currency, "string", context.packageName)
-            currency.text = context.getString(strId)
-            rateateNB.text = convertToVisualString(exchangeRate.saleRateNB)
-            saleRate.text = convertToVisualString(exchangeRate.saleRate)
-            purchaseRate.text = convertToVisualString(exchangeRate.purchaseRate)
+                curName = exchangeRate.currency.toString()
 
-            curName = exchangeRate.currency.toString()
+                if (graphSeries!=null){
+                    graph.visibility = View.VISIBLE
 
-            if (graphSeries!=null){
-                graph.visibility = View.VISIBLE
+                    graph.addSeries(graphSeries)
 
-                graph.addSeries(graphSeries)
+                    // set date label formatter
+                    graph.gridLabelRenderer.labelFormatter = DateAsXAxisLabelFormatter(context,SimpleDateFormat(DATE_FORMAT))
+                    graph.gridLabelRenderer.numHorizontalLabels = 3 // only 4 because of the space
 
-                // set date label formatter
-                graph.gridLabelRenderer.labelFormatter = DateAsXAxisLabelFormatter(context,SimpleDateFormat(DATE_FORMAT))
-                graph.gridLabelRenderer.numHorizontalLabels = 3 // only 4 because of the space
+                    // set manual x bounds to have nice steps
+                    graph.viewport.setMinX(graphSeries.lowestValueX)
+                    graph.viewport.setMaxX(graphSeries.highestValueX)
+                    graph.viewport.isXAxisBoundsManual = true
 
-                // set manual x bounds to have nice steps
-              graph.viewport.setMinX(graphSeries.lowestValueX)
-                graph.viewport.setMaxX(graphSeries.highestValueX)
-                graph.viewport.isXAxisBoundsManual = true
+                    graph.viewport.isYAxisBoundsManual = true
+                    graph.viewport.setMinY(graphSeries.lowestValueY)
+                    graph.viewport.setMaxY(graphSeries.highestValueY)
 
-                graph.viewport.isYAxisBoundsManual = true
-                graph.viewport.setMinY(graphSeries.lowestValueY)
-                graph.viewport.setMaxY(graphSeries.highestValueY)
-
-
-               /* graph.viewport.isScrollable = true // enables horizontal scrolling
-                  graph.viewport.setScrollableY(true) // enables vertical scrolling
-                  graph.viewport.isScalable = true // enables horizontal zooming and scrolling
-                  graph.viewport.setScalableY(true) // enables vertical zooming and scrolling
-*/
-
-           // as we use dates as labels, the human rounding to nice readable numbers
-           // is not necessary
-                graph.gridLabelRenderer.setHumanRounding(false)
-            }else{
-                graph.visibility = View.GONE
+                    // as we use dates as labels, the human rounding to nice readable numbers
+                    // is not necessary
+                    graph.gridLabelRenderer.setHumanRounding(false)
+                }else{
+                    graph.visibility = View.GONE
+                }
             }
+
 
 
         }
 
-        fun convertToVisualString(d:Double?):String{
+        private fun convertToVisualString(d:Double?):String{
             return  if (d!=null) String.format("%.2f",d) else " - "
+        }
+        fun convertToVisualString(s:String?):String{
+            return s ?: " null "
         }
 
 
