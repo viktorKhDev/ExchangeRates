@@ -69,7 +69,7 @@ class CoursesFragment : MainView, androidx.fragment.app.Fragment() {
         }else{
             get_full_list_btn.visibility = View.GONE
         }
-
+        progress_bar.visibility = View.GONE
     }
 
 
@@ -94,7 +94,7 @@ class CoursesFragment : MainView, androidx.fragment.app.Fragment() {
 
     override fun error(text: String) {
         Toast.makeText(requireContext(),text,Toast.LENGTH_LONG).show()
-
+        progress_bar.visibility = View.GONE
     }
 
 

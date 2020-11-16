@@ -71,11 +71,12 @@ class GraphData constructor(_presenter: MainPresenter) {
     }
 
 
-    private fun convertToVisualDouble(d:Double):Double{
-        return  (String.format("%.2f",d)).toDouble()
+
+   /* private fun getNumHorizontalLabels(graphSeries: List<DataPoint>):Int {
+
+
     }
-
-
+*/
 
 
 }

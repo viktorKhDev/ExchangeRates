@@ -22,7 +22,7 @@ class MainActivity  : AppCompatActivity() {
       })
         calendarView.setOnDateChangedListener { widget, date, selected ->
 
-            var day = add0ToStart(date.day.toString())
+            val day = add0ToStart(date.day.toString())
             var month = add0ToStart((date.month + 1).toString())
             var year = date.year.toString()
             text_selected_date.text = "${day}.${month}.${year}"

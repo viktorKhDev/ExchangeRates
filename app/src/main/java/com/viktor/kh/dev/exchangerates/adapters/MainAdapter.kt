@@ -1,15 +1,11 @@
 package com.viktor.kh.dev.exchangerates.adapters
 
 import android.content.Context
-import android.content.res.Resources
-import android.text.format.DateFormat
-import android.util.Log
 import androidx.recyclerview.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
-import android.widget.Toast
 import com.jjoe64.graphview.GraphView
 import com.jjoe64.graphview.helper.DateAsXAxisLabelFormatter
 import com.jjoe64.graphview.series.DataPoint
@@ -17,11 +13,8 @@ import com.jjoe64.graphview.series.LineGraphSeries
 import com.viktor.kh.dev.exchangerates.R
 import com.viktor.kh.dev.exchangerates.data.DataForCourses
 import com.viktor.kh.dev.exchangerates.presenters.MainPresenter
-
 import com.viktor.kh.dev.exchangerates.data.ExchangeRate
 import com.viktor.kh.dev.exchangerates.utils.DATE_FORMAT
-import java.lang.Exception
-import java.lang.NullPointerException
 import java.text.SimpleDateFormat
 import javax.inject.Inject
 
@@ -109,11 +102,13 @@ class MainAdapter @Inject constructor(_context:Context, dataForFragment: DataFor
                     // set date label formatter
                     graph.gridLabelRenderer.labelFormatter = DateAsXAxisLabelFormatter(context,SimpleDateFormat(DATE_FORMAT))
                     graph.gridLabelRenderer.numHorizontalLabels = 3 // only 4 because of the space
+                   // graph.gridLabelRenderer.numVerticalLabels = 5
 
                     // set manual x bounds to have nice steps
-                    graph.viewport.setMinX(graphSeries.lowestValueX)
-                    graph.viewport.setMaxX(graphSeries.highestValueX)
                     graph.viewport.isXAxisBoundsManual = true
+                   graph.viewport.setMinX(graphSeries.lowestValueX)
+                    graph.viewport.setMaxX(graphSeries.highestValueX)
+
 
                     graph.viewport.isYAxisBoundsManual = true
                     graph.viewport.setMinY(graphSeries.lowestValueY)
@@ -121,6 +116,8 @@ class MainAdapter @Inject constructor(_context:Context, dataForFragment: DataFor
 
                     // as we use dates as labels, the human rounding to nice readable numbers
                     // is not necessary
+
+
                     graph.gridLabelRenderer.setHumanRounding(false)
                 }else{
                     graph.visibility = View.GONE
@@ -134,9 +131,10 @@ class MainAdapter @Inject constructor(_context:Context, dataForFragment: DataFor
         private fun convertToVisualString(d:Double?):String{
             return  if (d!=null) String.format("%.2f",d) else " - "
         }
-        fun convertToVisualString(s:String?):String{
-            return s ?: " null "
-        }
+
+       /* private fun getNumHorizontalLabels(graphSeries: LineGraphSeries<DataPoint>):Int {
+
+        }*/
 
 
     }
