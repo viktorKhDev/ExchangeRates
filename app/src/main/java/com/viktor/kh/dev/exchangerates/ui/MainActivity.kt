@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.fragment.app.FragmentTransaction
 import com.viktor.kh.dev.exchangerates.R
 import kotlinx.android.synthetic.main.activity_main.*
 import java.util.*
@@ -25,7 +26,8 @@ class MainActivity  : AppCompatActivity() {
             val day = add0ToStart(date.day.toString())
             var month = add0ToStart((date.month + 1).toString())
             var year = date.year.toString()
-            text_selected_date.text = "${day}.${month}.${year}"
+            get_all_courses_btn.text = "${day}.${month}.${year}"
+            get_all_courses_btn.visibility = View.VISIBLE
         }
 
         val calendar = Calendar.getInstance()
@@ -53,24 +55,25 @@ class MainActivity  : AppCompatActivity() {
         super.onBackPressed()
     }
 
-    fun initMainList(){
-        if(text_selected_date.text.length>1){
+    private fun initMainList(){
+        if(get_all_courses_btn.text.length>1){
             val fragment : androidx.fragment.app.Fragment = CoursesFragment()
             val bundle: Bundle = Bundle()
-            bundle.putString("selectedDate", text_selected_date.text.toString())
+            bundle.putString("selectedDate", get_all_courses_btn.text.toString())
             fragment.arguments = bundle
-            supportFragmentManager.beginTransaction().replace(R.id.main_container, fragment).addToBackStack(
+            supportFragmentManager.beginTransaction().setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
+                .replace(R.id.main_container, fragment).addToBackStack(
                 null
             ).commit()
             get_all_courses_btn.visibility = View.GONE
         }else{
-            Toast.makeText(this, "Нужно выбрать дату!", Toast.LENGTH_LONG)
+            Toast.makeText(this, getText(R.string.need_choose_date), Toast.LENGTH_LONG)
         }
 
        
    }
 
-    fun add0ToStart(num: String):String{
+    private fun add0ToStart(num: String):String{
         if(num.length==1){
             return "0${num}"
         }else{

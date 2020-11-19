@@ -30,7 +30,7 @@ class MainPresenter @Inject constructor() {
 
 
     //checking the size of the list on the screen
-        var isShortList = true
+    var isShortList = true
 
 
      lateinit var dataForFragment: DataForCourses
@@ -130,20 +130,9 @@ class MainPresenter @Inject constructor() {
             }
             i += 1
         }
-      /*  var num: Int = 0
-        for (i in 0 until list.size){
-            if(list[i].currency==("UAH")){
-                num = i
-            }
-            if (list[i].currency==null){
-                list.removeAt(i)
-
-            }
-        }
-        list.removeAt(num)*/
 
 
-            Log.d("MyLog", "full list size = ${list.size}")
+        Log.d("MyLog", "full list size = ${list.size}")
 
 
         dataForFragment = if (this::dataForFragment.isInitialized){

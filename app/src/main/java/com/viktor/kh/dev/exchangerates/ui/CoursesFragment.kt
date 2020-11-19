@@ -30,7 +30,7 @@ class CoursesFragment : MainView, androidx.fragment.app.Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-         val view :View = inflater.inflate(R.layout.main_list_fragment,container,false)
+        val view :View = inflater.inflate(R.layout.main_list_fragment,container,false)
         App.component.inject(this)
         mainPresenter.init(this)
         val bundle: Bundle? = arguments
@@ -44,10 +44,10 @@ class CoursesFragment : MainView, androidx.fragment.app.Fragment() {
             mainPresenter.initList()
             get_full_list_btn.visibility = View.GONE
         })
-        
 
 
-       return view
+
+        return view
 
     }
 
@@ -69,7 +69,8 @@ class CoursesFragment : MainView, androidx.fragment.app.Fragment() {
         }else{
             get_full_list_btn.visibility = View.GONE
         }
-        progress_bar.visibility = View.GONE
+
+         progress_bar.visibility = View.GONE
     }
 
 
@@ -94,7 +95,7 @@ class CoursesFragment : MainView, androidx.fragment.app.Fragment() {
 
     override fun error(text: String) {
         Toast.makeText(requireContext(),text,Toast.LENGTH_LONG).show()
-        progress_bar.visibility = View.GONE
+
     }
 
 
@@ -103,5 +104,4 @@ class CoursesFragment : MainView, androidx.fragment.app.Fragment() {
 
 
 }
-
 

@@ -39,6 +39,7 @@
     <string name="purchase_rate_pb">Покупка банк</string>
     <string name="much_cur">больше валют</string>
     <string name="error_get_data">Не удается получить данные!</string>
+    <string name="need_choose_date">"Нужно выбрать дату!"</string>
 
 
 </resources>
