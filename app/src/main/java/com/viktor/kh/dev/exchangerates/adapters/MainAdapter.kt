@@ -1,5 +1,6 @@
 package com.viktor.kh.dev.exchangerates.adapters
 
+import android.animation.LayoutTransition
 import android.content.Context
 import android.text.format.DateFormat
 import androidx.recyclerview.widget.RecyclerView
@@ -8,6 +9,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.view.animation.AnimationUtils
 import android.widget.TextView
+import androidx.constraintlayout.widget.ConstraintLayout
 import com.jjoe64.graphview.GraphView
 import com.jjoe64.graphview.helper.DateAsXAxisLabelFormatter
 import com.jjoe64.graphview.series.DataPoint
@@ -84,15 +86,11 @@ class MainAdapter @Inject constructor(_context:Context, dataForFragment: DataFor
         val purchaseRate = view.findViewById<TextView>(R.id.purchase_rate)
         val graph : GraphView = view.findViewById(R.id.graph_container)
 
-
-
         lateinit var curName: String
 
-
-
-
-
         fun bind (exchangeRate: ExchangeRate, context: Context, graphSeries: LineGraphSeries<DataPoint>?){
+
+
 
             var strId :Int = context.resources.getIdentifier(exchangeRate.currency, "string", context.packageName)
             currency.text = context.getString(strId)
@@ -130,8 +128,6 @@ class MainAdapter @Inject constructor(_context:Context, dataForFragment: DataFor
                 // is not necessary
                 graph.gridLabelRenderer.setHumanRounding(false)
 
-              /*  val slideDownAnim = AnimationUtils.loadAnimation(context,R.anim.slide_down_anim)
-                graph.startAnimation(slideDownAnim)*/
             }else{
                 graph.visibility = View.GONE
             }

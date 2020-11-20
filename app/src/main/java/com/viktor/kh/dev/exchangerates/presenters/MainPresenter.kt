@@ -11,6 +11,7 @@ import com.viktor.kh.dev.exchangerates.data.ExchangeRate
 import com.viktor.kh.dev.exchangerates.di.App
 import com.viktor.kh.dev.exchangerates.repository.Repository
 import com.viktor.kh.dev.exchangerates.services.network.NetworkService
+import java.lang.Exception
 import javax.inject.Inject
 
 
@@ -69,41 +70,59 @@ class MainPresenter @Inject constructor() {
             }else{
                 initFullList()
             }
+       try {
+           if (dataForFragment.exchangeRates.isNotEmpty()){
+               mainView.initList(dataForFragment)
+           }else{
+               errorGetData()
+           }
+       }catch (e:Exception){
+           errorGetData()
+       }
 
 
-        mainView.initList(dataForFragment)
     }
 
     private fun initShortList(){
-        Log.d("MyLog", "start initShortList")
-        var list = tempCurrencyPojo.exchangeRate.toMutableList()
-        Log.d("MyLog", "list size = ${list.size}")
-        var newList =  mutableListOf<ExchangeRate>()
 
-        for (i in 0 until list.size){
-            if(list[i].currency==("USD")
-                ||list[i].currency==("EUR")
-                ||list[i].currency==("GBP")
-                ||list[i].currency==("PLZ")
-                ||list[i].currency==("RUB")){
-                newList.add(list[i])
+        try {
+            Log.d("MyLog", "start initShortList")
+            var list = tempCurrencyPojo.exchangeRate.toMutableList()
+            if (list.size>0){
 
+                Log.d("MyLog", "list size = ${list.size}")
+                var newList =  mutableListOf<ExchangeRate>()
+
+                for (i in 0 until list.size){
+                    if(list[i].currency==("USD")
+                        ||list[i].currency==("EUR")
+                        ||list[i].currency==("GBP")
+                        ||list[i].currency==("PLZ")
+                        ||list[i].currency==("RUB")){
+                        newList.add(list[i])
+
+                    }
+                }
+
+
+                Log.d("MyLog", "list size after = ${newList.size}")
+
+                if (this::dataForFragment.isInitialized){
+                    val data = dataForFragment
+
+                    dataForFragment = DataForCourses(data.date,data.mapForGraph,newList)
+                }
+                else{
+                    dataForFragment = DataForCourses(tempCurrencyPojo.date,null,newList)
+                }
+
+                isShortList = true
             }
+        }catch (e:Exception){
+            errorGetData()
         }
 
 
-        Log.d("MyLog", "list size after = ${newList.size}")
-
-        if (this::dataForFragment.isInitialized){
-            val data = dataForFragment
-
-            dataForFragment = DataForCourses(data.date,data.mapForGraph,newList)
-        }
-        else{
-            dataForFragment = DataForCourses(tempCurrencyPojo.date,null,newList)
-        }
-
-        isShortList = true
     }
 
 
@@ -111,40 +130,47 @@ class MainPresenter @Inject constructor() {
 
 
     private fun initFullList(){
+        try {
+            Log.d("MyLog", "start initFullList")
+            var list = tempCurrencyPojo.exchangeRate.toMutableList()
+            if (list.size>0){
+                list.removeAt(0)
 
-        Log.d("MyLog", "start initFullList")
-        var list = tempCurrencyPojo.exchangeRate.toMutableList()
+                var i  = 0
 
-        list.removeAt(0)
+                while (i<list.size){
+                    if(list[i].currency==("UAH")){
+                        list.removeAt(i)
+                        continue
+                    }
+                    if (list[i].currency==null){
+                        list.removeAt(i)
+                        continue
+                    }
+                    i += 1
+                }
 
-         var i  = 0
 
-        while (i<list.size){
-            if(list[i].currency==("UAH")){
-                list.removeAt(i)
-                continue
+                Log.d("MyLog", "full list size = ${list.size}")
+
+
+                dataForFragment = if (this::dataForFragment.isInitialized){
+                    val data = dataForFragment
+
+                    DataForCourses(data.date,data.mapForGraph,list)
+                } else{
+                    DataForCourses(tempCurrencyPojo.date,null,list)
+                }
+
+
+                isShortList = false
+
             }
-            if (list[i].currency==null){
-                list.removeAt(i)
-               continue
-            }
-            i += 1
+        }catch (e:Exception){
+            errorGetData()
         }
 
 
-        Log.d("MyLog", "full list size = ${list.size}")
-
-
-        dataForFragment = if (this::dataForFragment.isInitialized){
-            val data = dataForFragment
-
-            DataForCourses(data.date,data.mapForGraph,list)
-        } else{
-            DataForCourses(tempCurrencyPojo.date,null,list)
-        }
-
-
-        isShortList = false
 
 
     }

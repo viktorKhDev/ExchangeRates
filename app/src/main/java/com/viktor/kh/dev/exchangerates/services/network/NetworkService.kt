@@ -45,6 +45,8 @@ class NetworkService {
                              Log.d("MyLog", "srart network")
                            mainPresenter.setCourses(temp)
                            repository.updateDb(temp)
+                       }else{
+                           mainPresenter.errorGetData()
                        }
                    }
 
