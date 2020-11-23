@@ -6,7 +6,7 @@ import com.jjoe64.graphview.series.DataPoint
 import com.jjoe64.graphview.series.LineGraphSeries
 import com.viktor.kh.dev.exchangerates.R
 import com.viktor.kh.dev.exchangerates.data.CurrencyPojo
-import com.viktor.kh.dev.exchangerates.data.DataForCourses
+import com.viktor.kh.dev.exchangerates.data.DataCourses
 import com.viktor.kh.dev.exchangerates.data.ExchangeRate
 import com.viktor.kh.dev.exchangerates.di.App
 import com.viktor.kh.dev.exchangerates.repository.Repository
@@ -34,7 +34,7 @@ class MainPresenter @Inject constructor() {
     var isShortList = true
 
 
-     lateinit var dataForFragment: DataForCourses
+     lateinit var dataFragment: DataCourses
 
 
 
@@ -55,15 +55,12 @@ class MainPresenter @Inject constructor() {
     fun setCourses(cur:CurrencyPojo){
         tempCurrencyPojo = cur
         if(isMainView){
-            initList()
+            updateList()
         }
 
     }
 
-
-
-
-    fun initList(){
+    fun updateList(){
 
             if (isShortList){
                 initShortList()
@@ -71,8 +68,8 @@ class MainPresenter @Inject constructor() {
                 initFullList()
             }
        try {
-           if (dataForFragment.exchangeRates.isNotEmpty()){
-               mainView.initList(dataForFragment)
+           if (dataFragment.exchangeRates.isNotEmpty()){
+               mainView.initList(dataFragment)
            }else{
                errorGetData()
            }
@@ -107,13 +104,13 @@ class MainPresenter @Inject constructor() {
 
                 Log.d("MyLog", "list size after = ${newList.size}")
 
-                if (this::dataForFragment.isInitialized){
-                    val data = dataForFragment
+                if (this::dataFragment.isInitialized){
+                    val data = dataFragment
 
-                    dataForFragment = DataForCourses(data.date,data.mapForGraph,newList)
+                    dataFragment = DataCourses(data.date,data.lastNameClicked,data.mapForGraph,newList)
                 }
                 else{
-                    dataForFragment = DataForCourses(tempCurrencyPojo.date,null,newList)
+                    dataFragment = DataCourses(tempCurrencyPojo.date,null,null,newList)
                 }
 
                 isShortList = true
@@ -154,12 +151,12 @@ class MainPresenter @Inject constructor() {
                 Log.d("MyLog", "full list size = ${list.size}")
 
 
-                dataForFragment = if (this::dataForFragment.isInitialized){
-                    val data = dataForFragment
+                dataFragment = if (this::dataFragment.isInitialized){
+                    val data = dataFragment
 
-                    DataForCourses(data.date,data.mapForGraph,list)
+                    DataCourses(data.date,data.lastNameClicked,data.mapForGraph,list)
                 } else{
-                    DataForCourses(tempCurrencyPojo.date,null,list)
+                    DataCourses(tempCurrencyPojo.date,null,null,list)
                 }
 
 
@@ -177,19 +174,18 @@ class MainPresenter @Inject constructor() {
 
     fun setGraph(list:LineGraphSeries<DataPoint>,currencyName: String) {
         val map = mutableMapOf<String,LineGraphSeries<DataPoint>>()
-        if (dataForFragment.mapForGraph!=null){
-            for (i in dataForFragment.mapForGraph!!){
+        if (dataFragment.mapForGraph!=null){
+            for (i in dataFragment.mapForGraph!!){
                 map.put(i.key,i.value)
             }
         }
 
         map.put(currencyName,list)
+        val data = dataFragment
 
-        val data = dataForFragment
+        dataFragment = DataCourses(data.date,currencyName,map,data.exchangeRates)
 
-        dataForFragment = DataForCourses(data.date,map,data.exchangeRates)
-
-        initList()
+        updateList()
     }
 
     fun errorGetData(){
@@ -200,10 +196,11 @@ class MainPresenter @Inject constructor() {
 
     fun getDataForGraph(currencyName: String) {
         Log.d("MyLog", "currencyName = ${currencyName}")
-        if (dataForFragment.mapForGraph!=null){
-            if(dataForFragment.mapForGraph!!.containsKey(currencyName)){
-                dataForFragment.mapForGraph!!.remove(currencyName)
-                initList()
+        if (dataFragment.mapForGraph!=null){
+            if(dataFragment.mapForGraph!!.containsKey(currencyName)){
+                dataFragment.mapForGraph!!.remove(currencyName)
+                dataFragment.lastNameClicked = currencyName
+                updateList()
             }else{
                 repository.getDataForGraph(currencyName)
             }
