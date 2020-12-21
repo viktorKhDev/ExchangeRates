@@ -30,11 +30,11 @@ class MainAdapter @Inject constructor(_context:Context, dataFragment: DataCourse
 
 
 
-    val mapForGraph: Map<String, LineGraphSeries<DataPoint>>? = dataFragment.mapForGraph
-    val list = dataFragment.exchangeRates
+    private val mapForGraph: Map<String, LineGraphSeries<DataPoint>>? = dataFragment.mapForGraph
+    private val list = dataFragment.exchangeRates
     val context = _context
-    val presenter =  _presenter
-    val lastName = dataFragment.lastNameClicked
+    private val presenter =  _presenter
+    private val lastName = dataFragment.lastNameClicked
 
 
 
@@ -126,6 +126,7 @@ class MainAdapter @Inject constructor(_context:Context, dataFragment: DataCourse
 
 
                 graph.gridLabelRenderer.setHumanRounding(false)
+
 
             }else{
 

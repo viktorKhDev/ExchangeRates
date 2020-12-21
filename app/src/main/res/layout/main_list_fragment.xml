@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".ui.MainActivity"
-    android:background="@color/colorAccent">
+    android:background="@color/colorPrimary">
 
     <TextView
         android:id="@+id/text_date"
@@ -22,21 +22,14 @@
         app:layout_constraintTop_toTopOf="parent" />
 
 
-    <androidx.cardview.widget.CardView
-        android:id="@+id/info_panel"
-        android:layout_margin="5dp"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        tools:ignore="MissingConstraints"
-        app:layout_constraintTop_toBottomOf="@id/text_date"
-        app:cardElevation="2dp"
-        app:cardCornerRadius="4dp"
-        >
+
 
         <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/info_panel"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:background="@color/colorPrimary"
+            app:layout_constraintTop_toBottomOf="@id/text_date"
             android:padding="3dp">
 
 
@@ -101,7 +94,7 @@
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
-    </androidx.cardview.widget.CardView>
+
 
 
 
@@ -124,10 +117,10 @@
         android:background="@drawable/button_style"
         android:paddingStart="40dp"
         android:paddingEnd="40dp"
-        android:layout_marginStart="5dp"
-        android:layout_marginEnd="5dp"
         android:text="@string/much_cur"
         android:textColor="@color/colorWhite"
+        android:drawableLeft="@drawable/ic_baseline_arrow_drop_down_24"
+        android:drawableRight="@drawable/ic_baseline_arrow_drop_down_24"
         android:visibility="visible"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

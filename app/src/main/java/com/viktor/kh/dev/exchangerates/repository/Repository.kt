@@ -23,7 +23,7 @@ class Repository @Inject constructor() {
     @Inject
     lateinit var networkService: NetworkService
 
-    lateinit var mainPresenter: MainPresenter
+    private lateinit var mainPresenter: MainPresenter
 
 
     fun initMainPresenter(mainPresenter: MainPresenter){
@@ -34,12 +34,9 @@ class Repository @Inject constructor() {
 
 
     fun getCourses(date: String){
-        Log.d("MyLog", "start getCourses")
         GlobalScope.launch(Dispatchers.IO) {
             val list =  dao.getAll()
-
-           if(list.isNotEmpty()){
-               Log.d("MyLog", list.size.toString())
+            if(list.isNotEmpty()){
                getForDate(list,date)
            }else{
                getFromNetwork(date)
@@ -48,8 +45,6 @@ class Repository @Inject constructor() {
     }
 
     fun updateDb( tempCurrencyPojo :CurrencyPojo){
-        Log.d("MyLog", "start updateDb")
-        Log.d("MyLog", "list for update db size - ${tempCurrencyPojo.exchangeRate.size}-----------------------------------------")
         GlobalScope.launch(Dispatchers.IO) {
             for (i in tempCurrencyPojo.exchangeRate) {
               var exRoom = ExchangeRateRoom(
@@ -73,8 +68,7 @@ class Repository @Inject constructor() {
 
 
      private fun getFromNetwork(date: String){
-        Log.d("MyLog", "start getFromNetwork")
-       GlobalScope.launch(Dispatchers.Main){
+         GlobalScope.launch(Dispatchers.Main){
            networkService.getAllCourses(date)
        }
 
@@ -82,8 +76,7 @@ class Repository @Inject constructor() {
 
 
      private fun getForDate(list: List<ExchangeRateRoom>,date: String) {
-          Log.d("MyLog", "start getForDate")
-      val exchange = mutableListOf<ExchangeRate>()
+         val exchange = mutableListOf<ExchangeRate>()
             for(i in list){
                 if(i.date==date)
                 exchange.add(ExchangeRate(
@@ -96,9 +89,7 @@ class Repository @Inject constructor() {
                 ))
             }
 
-          Log.d("MyLog", exchange.size.toString())
-
-          if (exchange.isNotEmpty()){
+         if (exchange.isNotEmpty()){
 
             GlobalScope.launch(Dispatchers.Main){
                 mainPresenter.setCourses(CurrencyPojo(

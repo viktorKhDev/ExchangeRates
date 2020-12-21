@@ -14,8 +14,6 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     tools:ignore="MissingConstraints"
-    app:cardElevation="2dp"
-    app:cardCornerRadius="4dp"
     >
 <androidx.constraintlayout.widget.ConstraintLayout
     android:layout_width="match_parent"

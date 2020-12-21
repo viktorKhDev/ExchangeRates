@@ -26,7 +26,7 @@ class CoursesFragment : MainView, androidx.fragment.app.Fragment() {
 
     lateinit var mainAdapter: MainAdapter
 
-    lateinit var listState: Parcelable
+    private lateinit var listState: Parcelable
 
 
     override fun onCreateView(
@@ -55,7 +55,6 @@ class CoursesFragment : MainView, androidx.fragment.app.Fragment() {
 
 
     override fun initList(dataForFragment: DataCourses) {
-        Log.d("MyLog", " initList list size in fragment = ${dataForFragment.exchangeRates.size}")
         text_date.text = dataForFragment.date
         mainAdapter = MainAdapter(requireContext(),dataForFragment,mainPresenter)
            if (main_list.adapter!=null){
@@ -91,7 +90,7 @@ class CoursesFragment : MainView, androidx.fragment.app.Fragment() {
 
     override fun onResume() {
         super.onResume()
-        if(mainPresenter.isMainView==false&&mainAdapter.itemCount==0){
+        if(!mainPresenter.isMainView && mainAdapter.itemCount==0){
             mainPresenter.isMainView = true
             mainPresenter.updateList()
             if (!mainPresenter.isShortList){

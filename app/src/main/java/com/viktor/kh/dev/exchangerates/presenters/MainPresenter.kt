@@ -33,8 +33,7 @@ class MainPresenter @Inject constructor() {
     //checking the size of the list on the screen
     var isShortList = true
 
-
-     lateinit var dataFragment: DataCourses
+    private lateinit var dataFragment: DataCourses
 
 
 
@@ -61,8 +60,7 @@ class MainPresenter @Inject constructor() {
     }
 
     fun updateList(){
-
-            if (isShortList){
+        if (isShortList){
                 initShortList()
             }else{
                 initFullList()
@@ -83,11 +81,8 @@ class MainPresenter @Inject constructor() {
     private fun initShortList(){
 
         try {
-            Log.d("MyLog", "start initShortList")
             var list = tempCurrencyPojo.exchangeRate.toMutableList()
             if (list.size>0){
-
-                Log.d("MyLog", "list size = ${list.size}")
                 var newList =  mutableListOf<ExchangeRate>()
 
                 for (i in 0 until list.size){
@@ -100,9 +95,6 @@ class MainPresenter @Inject constructor() {
 
                     }
                 }
-
-
-                Log.d("MyLog", "list size after = ${newList.size}")
 
                 if (this::dataFragment.isInitialized){
                     val data = dataFragment
@@ -121,9 +113,6 @@ class MainPresenter @Inject constructor() {
 
 
     }
-
-
-
 
 
     private fun initFullList(){
@@ -146,9 +135,6 @@ class MainPresenter @Inject constructor() {
                     }
                     i += 1
                 }
-
-
-                Log.d("MyLog", "full list size = ${list.size}")
 
 
                 dataFragment = if (this::dataFragment.isInitialized){

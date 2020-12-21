@@ -35,19 +35,19 @@ class GraphData constructor(_presenter: MainPresenter) {
         presenter = _presenter
     }
 
-    var list = mutableListOf<DataPoint>()
+    var list = mutableListOf<ExchangeRateRoom>()
 
 
     suspend fun getGraph(currencyName: String){
       var list = dao.getForCurrency(currencyName)
-       var graphList = getSortList(list)
+       var graphList = getList(list)
        GlobalScope.launch (Dispatchers.Main){
            presenter.setGraph(graphList,currencyName)
        }
 
     }
 
-    private  fun getSortList(list: List<ExchangeRateRoom>):LineGraphSeries<DataPoint>{
+    private  fun getList(list: List<ExchangeRateRoom>):LineGraphSeries<DataPoint>{
        var listGraph = mutableListOf<CurrencyGraph>()
         val format = SimpleDateFormat(DATE_FORMAT,Locale.ENGLISH)
         for (i in list){
@@ -62,21 +62,16 @@ class GraphData constructor(_presenter: MainPresenter) {
 
         var l = Array(listGraph.size){ i -> DataPoint(Date(listGraph[i].date),listGraph[i].value) }
 
-
-        Log.d("MyLog", "GraphSize =  ${l.size}")
-        for (i in l){
-            Log.d("MyLog", "GraphData =  ${i.x} , ${i.y}")
-        }
         return LineGraphSeries(l)
     }
 
 
 
-   /* private fun getNumHorizontalLabels(graphSeries: List<DataPoint>):Int {
 
+   private fun interPolarList(list: List<CurrencyGraph>):List<CurrencyGraph> {
+       return emptyList()
+   }
 
-    }
-*/
 
 
 }
