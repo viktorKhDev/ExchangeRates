@@ -40,6 +40,10 @@
     <string name="much_cur">больше валют</string>
     <string name="error_get_data">Не удается получить данные!</string>
     <string name="need_choose_date">"Нужно выбрать дату!"</string>
+    <string name="ok">ОК</string>
+    <string name="only_from_db">График составляется данных которые Вы уже просматривали</string>
+    <string name="preference_first_graph">first_open_graph</string>
+    <string name="pref_first_launch">first_launch</string>
 
 
 </resources>

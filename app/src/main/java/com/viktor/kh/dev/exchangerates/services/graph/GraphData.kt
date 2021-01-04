@@ -68,9 +68,7 @@ class GraphData constructor(_presenter: MainPresenter) {
 
 
 
-   private fun interPolarList(list: List<CurrencyGraph>):List<CurrencyGraph> {
-       return emptyList()
-   }
+
 
 
 

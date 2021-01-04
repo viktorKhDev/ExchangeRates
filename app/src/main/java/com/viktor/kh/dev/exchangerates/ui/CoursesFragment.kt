@@ -2,6 +2,8 @@ package com.viktor.kh.dev.exchangerates.ui
 
 
 
+import android.app.AlertDialog
+import android.content.DialogInterface
 import android.os.Bundle
 import android.os.Parcelable
 import android.util.Log
@@ -24,7 +26,7 @@ class CoursesFragment : MainView, androidx.fragment.app.Fragment() {
     @Inject
     lateinit var mainPresenter: MainPresenter
 
-    lateinit var mainAdapter: MainAdapter
+    private lateinit var mainAdapter: MainAdapter
 
     private lateinit var listState: Parcelable
 
@@ -105,9 +107,20 @@ class CoursesFragment : MainView, androidx.fragment.app.Fragment() {
            progress_bar.visibility = View.GONE
     }
 
+    override fun showMessage(text: String) {
+     var dialog = AlertDialog.Builder(context)
 
+        dialog.setMessage(text)
+        dialog.setCancelable(true)
+        dialog.setPositiveButton(R.string.ok,
+            DialogInterface.OnClickListener { dialog, id ->
+                dialog.cancel()
+            })
 
+        dialog.create()
+        dialog.show()
 
+    }
 
 
 }

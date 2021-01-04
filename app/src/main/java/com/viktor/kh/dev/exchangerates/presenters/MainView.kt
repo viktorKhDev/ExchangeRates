@@ -7,5 +7,6 @@ interface MainView {
 
     fun initList(dataCoursesFragment: DataCourses)
     fun error(text: String)
+    fun showMessage(text: String)
 
 }

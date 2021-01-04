@@ -181,6 +181,7 @@ class MainPresenter @Inject constructor() {
 
 
     fun getDataForGraph(currencyName: String) {
+        //we get grapf for currency name
         Log.d("MyLog", "currencyName = ${currencyName}")
         if (dataFragment.mapForGraph!=null){
             if(dataFragment.mapForGraph!!.containsKey(currencyName)){
@@ -195,7 +196,25 @@ class MainPresenter @Inject constructor() {
         }
 
 
+
+
     }
+
+    fun showMessage(text: String){
+        mainView.showMessage(text)
+    }
+
+
+    fun isFirstGraph():Boolean{
+        //if we get the graph for the first time it will be true
+        return repository.getFirstPreferencesBoolen(context.getString(R.string.preference_first_graph))
+    }
+
+    fun setFirstGaph(){
+        //we establish that the graph has already been received
+        repository.setFirstPreferencesBoolen(context.getString(R.string.preference_first_graph))
+    }
+
 
 
 

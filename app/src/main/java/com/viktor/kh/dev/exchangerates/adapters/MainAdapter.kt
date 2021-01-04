@@ -14,6 +14,7 @@ import com.jjoe64.graphview.helper.DateAsXAxisLabelFormatter
 import com.jjoe64.graphview.series.DataPoint
 import com.jjoe64.graphview.series.LineGraphSeries
 import com.viktor.kh.dev.exchangerates.R
+import com.viktor.kh.dev.exchangerates.data.CurrencyGraph
 import com.viktor.kh.dev.exchangerates.data.DataCourses
 import com.viktor.kh.dev.exchangerates.presenters.MainPresenter
 
@@ -72,6 +73,7 @@ class MainAdapter @Inject constructor(_context:Context, dataFragment: DataCourse
         holder.itemView.setOnClickListener(View.OnClickListener {
 
             presenter.getDataForGraph(holder.curName)
+            showFirstGraph()
 
         })
 
@@ -114,6 +116,7 @@ class MainAdapter @Inject constructor(_context:Context, dataFragment: DataCourse
                 // set date label formatter
                 graph.gridLabelRenderer.labelFormatter = DateAsXAxisLabelFormatter(context,SimpleDateFormat(DATE_FORMAT))
                 graph.gridLabelRenderer.numHorizontalLabels = 3 // only 4 because of the space
+                graph.gridLabelRenderer.numVerticalLabels = 5
 
                 // set manual x bounds to have nice steps
                 graph.viewport.setMinX(graphSeries.lowestValueX)
@@ -126,6 +129,7 @@ class MainAdapter @Inject constructor(_context:Context, dataFragment: DataCourse
 
 
                 graph.gridLabelRenderer.setHumanRounding(false)
+
 
 
             }else{
@@ -141,5 +145,17 @@ class MainAdapter @Inject constructor(_context:Context, dataFragment: DataCourse
         }
 
 
+
+
+
+
     }
+
+    fun showFirstGraph(){
+        if (!presenter.isFirstGraph()){
+            presenter.showMessage(context.getString(R.string.only_from_db))
+            presenter.setFirstGaph()
+        }
+    }
+
 }

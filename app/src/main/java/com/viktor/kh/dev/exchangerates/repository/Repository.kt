@@ -1,8 +1,9 @@
 package com.viktor.kh.dev.exchangerates.repository
 
-import android.util.Log
-import com.jjoe64.graphview.series.DataPoint
-import com.jjoe64.graphview.series.LineGraphSeries
+import android.content.Context
+import android.content.SharedPreferences
+import android.provider.Settings.Global.getString
+import com.viktor.kh.dev.exchangerates.R
 import com.viktor.kh.dev.exchangerates.data.CurrencyPojo
 import com.viktor.kh.dev.exchangerates.data.ExchangeRate
 import com.viktor.kh.dev.exchangerates.data.ExchangeRateRoom
@@ -22,6 +23,8 @@ class Repository @Inject constructor() {
     lateinit var dao: ExchangeRateDao
     @Inject
     lateinit var networkService: NetworkService
+    @Inject
+    lateinit var context: Context
 
     private lateinit var mainPresenter: MainPresenter
 
@@ -43,6 +46,23 @@ class Repository @Inject constructor() {
            }
         }
     }
+
+
+
+    fun getFirstPreferencesBoolen(prefName:String): Boolean{
+        val preferences = context.getSharedPreferences(context.getString(R.string.pref_first_launch), Context.MODE_PRIVATE)
+        return preferences.getBoolean(prefName,false)
+    }
+
+    fun setFirstPreferencesBoolen(prefName:String){
+        val preferences = context.getSharedPreferences(context.getString(R.string.pref_first_launch), Context.MODE_PRIVATE)
+        val editor = preferences.edit()
+        editor.putBoolean(context.getString(R.string.preference_first_graph),true)
+        editor.commit()
+    }
+
+
+
 
     fun updateDb( tempCurrencyPojo :CurrencyPojo){
         GlobalScope.launch(Dispatchers.IO) {
