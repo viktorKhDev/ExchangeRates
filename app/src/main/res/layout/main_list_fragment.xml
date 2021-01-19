@@ -40,6 +40,7 @@
                 android:gravity="center"
                 android:padding="3dp"
                 android:text="@string/cur_info"
+                android:textSize="10sp"
                 android:textColor="@color/colorWhite"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toStartOf="@+id/rate_nb"
