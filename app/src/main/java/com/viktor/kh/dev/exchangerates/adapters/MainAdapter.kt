@@ -151,7 +151,7 @@ class MainAdapter @Inject constructor(_context:Context, dataFragment: DataCourse
 
     }
 
-    fun showFirstGraph(){
+    private fun showFirstGraph(){
         if (!presenter.isFirstGraph()){
             presenter.showMessage(context.getString(R.string.only_from_db))
             presenter.setFirstGaph()
