@@ -2,13 +2,12 @@ package com.viktor.kh.dev.exchangerates.presenters
 
 import android.content.Context
 import android.util.Log
-import com.jjoe64.graphview.series.DataPoint
-import com.jjoe64.graphview.series.LineGraphSeries
 import com.viktor.kh.dev.exchangerates.R
 import com.viktor.kh.dev.exchangerates.data.CurrencyPojo
 import com.viktor.kh.dev.exchangerates.data.DataCourses
 import com.viktor.kh.dev.exchangerates.data.ExchangeRate
 import com.viktor.kh.dev.exchangerates.di.App
+import com.viktor.kh.dev.exchangerates.graph.Graph
 import com.viktor.kh.dev.exchangerates.repository.Repository
 import com.viktor.kh.dev.exchangerates.services.network.NetworkService
 import java.lang.Exception
@@ -99,10 +98,10 @@ class MainPresenter @Inject constructor() {
                 if (this::dataFragment.isInitialized){
                     val data = dataFragment
 
-                    dataFragment = DataCourses(data.date,data.lastNameClicked,data.mapForGraph,newList)
+                    //dataFragment = DataCourses(data.date,data.lastNameClicked,data.mapForGraph,newList)
                 }
                 else{
-                    dataFragment = DataCourses(tempCurrencyPojo.date,null,null,newList)
+                    dataFragment = DataCourses(tempCurrencyPojo.date,null,null, newList)
                 }
 
                 isShortList = true
@@ -137,13 +136,13 @@ class MainPresenter @Inject constructor() {
                 }
 
 
-                dataFragment = if (this::dataFragment.isInitialized){
+              /*  dataFragment = if (this::dataFragment.isInitialized){
                     val data = dataFragment
 
                     DataCourses(data.date,data.lastNameClicked,data.mapForGraph,list)
                 } else{
                     DataCourses(tempCurrencyPojo.date,null,null,list)
-                }
+                }*/
 
 
                 isShortList = false
@@ -158,19 +157,7 @@ class MainPresenter @Inject constructor() {
 
     }
 
-    fun setGraph(list:LineGraphSeries<DataPoint>,currencyName: String) {
-        val map = mutableMapOf<String,LineGraphSeries<DataPoint>>()
-        if (dataFragment.mapForGraph!=null){
-            for (i in dataFragment.mapForGraph!!){
-                map.put(i.key,i.value)
-            }
-        }
-
-        map.put(currencyName,list)
-        val data = dataFragment
-
-        dataFragment = DataCourses(data.date,currencyName,map,data.exchangeRates)
-
+    fun setGraph(graph:Graph,currencyName: String) {
         updateList()
     }
 
@@ -182,21 +169,6 @@ class MainPresenter @Inject constructor() {
 
     fun getDataForGraph(currencyName: String) {
         //we get grapf for currency name
-        Log.d("MyLog", "currencyName = ${currencyName}")
-        if (dataFragment.mapForGraph!=null){
-            if(dataFragment.mapForGraph!!.containsKey(currencyName)){
-                dataFragment.mapForGraph!!.remove(currencyName)
-                dataFragment.lastNameClicked = currencyName
-                updateList()
-            }else{
-                repository.getDataForGraph(currencyName)
-            }
-        }else{
-            repository.getDataForGraph(currencyName)
-        }
-
-
-
 
     }
 

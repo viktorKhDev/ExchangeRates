@@ -6,21 +6,14 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.animation.AnimationUtils
-import android.widget.RelativeLayout
 import android.widget.TextView
-import androidx.constraintlayout.widget.ConstraintLayout
-import com.jjoe64.graphview.GraphView
-import com.jjoe64.graphview.helper.DateAsXAxisLabelFormatter
-import com.jjoe64.graphview.series.DataPoint
-import com.jjoe64.graphview.series.LineGraphSeries
 import com.viktor.kh.dev.exchangerates.R
-import com.viktor.kh.dev.exchangerates.data.CurrencyGraph
 import com.viktor.kh.dev.exchangerates.data.DataCourses
 import com.viktor.kh.dev.exchangerates.presenters.MainPresenter
-
 import com.viktor.kh.dev.exchangerates.data.ExchangeRate
-import com.viktor.kh.dev.exchangerates.utils.DATE_FORMAT
-import java.text.SimpleDateFormat
+import com.viktor.kh.dev.exchangerates.data.GraphData
+import com.viktor.kh.dev.exchangerates.graph.Graph
+import com.viktor.kh.dev.exchangerates.utils.customs.CustomGraph
 import javax.inject.Inject
 
 
@@ -31,10 +24,11 @@ class MainAdapter @Inject constructor(_context:Context, dataFragment: DataCourse
 
 
 
-    private val mapForGraph: Map<String, LineGraphSeries<DataPoint>>? = dataFragment.mapForGraph
+
     private val list = dataFragment.exchangeRates
     val context = _context
     private val presenter =  _presenter
+    private val graph = Graph(_presenter)
     private val lastName = dataFragment.lastNameClicked
 
 
@@ -57,15 +51,15 @@ class MainAdapter @Inject constructor(_context:Context, dataFragment: DataCourse
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         var listItem  = list.get(position)
 
-        if (mapForGraph != null) {
-            if(mapForGraph.contains(listItem.currency)){
+        if (graph != null) {
+            /*if(graph.contains(listItem.currency)){
 
-                holder.bind(listItem,context,mapForGraph.get(listItem.currency),lastName)
+               holder.bind(listItem,context,graph.getGraph(listItem.currency),lastName)
 
             }else{
                 holder.bind(listItem,context,null,null)
             }
-
+*/
         }else{
             holder.bind(listItem,context,null,null)
 
@@ -86,10 +80,10 @@ class MainAdapter @Inject constructor(_context:Context, dataFragment: DataCourse
         val rateateNB = view.findViewById<TextView>(R.id.rate_nb)
         val saleRate = view.findViewById<TextView>(R.id.sale_rate)
         val purchaseRate = view.findViewById<TextView>(R.id.purchase_rate)
-        val graph : GraphView = view.findViewById(R.id.graph_container)
+        val graph : CustomGraph = view.findViewById(R.id.graph_container)
         lateinit var curName: String
 
-        fun bind (exchangeRate: ExchangeRate, context: Context, graphSeries: LineGraphSeries<DataPoint>?,lastName:String?){
+        fun bind (exchangeRate: ExchangeRate, context: Context, graphSeries: List<GraphData>?,lastName:String?){
 
 
 
@@ -103,7 +97,7 @@ class MainAdapter @Inject constructor(_context:Context, dataFragment: DataCourse
             curName = exchangeRate.currency.toString()
 
             if (graphSeries!=null){
-                graph.visibility = View.VISIBLE
+               // graph.visibility = View.VISIBLE
 
             if (lastName!=null){
                 if (lastName==curName){
@@ -112,29 +106,10 @@ class MainAdapter @Inject constructor(_context:Context, dataFragment: DataCourse
                 }
             }
 
-                graph.addSeries(graphSeries)
-                // set date label formatter
-                graph.gridLabelRenderer.labelFormatter = DateAsXAxisLabelFormatter(context,SimpleDateFormat(DATE_FORMAT))
-                graph.gridLabelRenderer.numHorizontalLabels = 3 // only 4 because of the space
-                graph.gridLabelRenderer.numVerticalLabels = 5
-
-                // set manual x bounds to have nice steps
-                graph.viewport.setMinX(graphSeries.lowestValueX)
-                graph.viewport.setMaxX(graphSeries.highestValueX)
-                graph.viewport.isXAxisBoundsManual = true
-
-                graph.viewport.isYAxisBoundsManual = true
-                graph.viewport.setMinY(graphSeries.lowestValueY)
-                graph.viewport.setMaxY(graphSeries.highestValueY)
-
-
-                graph.gridLabelRenderer.setHumanRounding(false)
-
-
 
             }else{
 
-                graph.visibility = View.GONE
+               // graph.visibility = View.GONE
             }
 
 

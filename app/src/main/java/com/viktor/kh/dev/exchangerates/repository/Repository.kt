@@ -1,15 +1,13 @@
 package com.viktor.kh.dev.exchangerates.repository
 
 import android.content.Context
-import android.content.SharedPreferences
-import android.provider.Settings.Global.getString
 import com.viktor.kh.dev.exchangerates.R
 import com.viktor.kh.dev.exchangerates.data.CurrencyPojo
 import com.viktor.kh.dev.exchangerates.data.ExchangeRate
 import com.viktor.kh.dev.exchangerates.data.ExchangeRateRoom
 import com.viktor.kh.dev.exchangerates.di.App
+import com.viktor.kh.dev.exchangerates.graph.Graph
 import com.viktor.kh.dev.exchangerates.presenters.MainPresenter
-import com.viktor.kh.dev.exchangerates.services.graph.GraphData
 import com.viktor.kh.dev.exchangerates.services.network.NetworkService
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
@@ -130,7 +128,7 @@ class Repository @Inject constructor() {
 
     fun getDataForGraph(currencyName: String){
        GlobalScope.launch (Dispatchers.IO){
-           GraphData(mainPresenter).getGraph(currencyName)
+           Graph(mainPresenter).getGraph(currencyName)
        }
 
     }
