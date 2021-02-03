@@ -4,6 +4,6 @@ import com.viktor.kh.dev.exchangerates.graph.Graph
 data class DataCourses (
     var date: String,
     var lastNameClicked:String?,
-    var graph: Graph?,
+    var graphData:Map <String,List<GraphData>>?,
     var exchangeRates: List<ExchangeRate>
 )

@@ -97,7 +97,7 @@ class MainAdapter @Inject constructor(_context:Context, dataFragment: DataCourse
             curName = exchangeRate.currency.toString()
 
             if (graphSeries!=null){
-               // graph.visibility = View.VISIBLE
+                graph.visibility = View.VISIBLE
 
             if (lastName!=null){
                 if (lastName==curName){
@@ -109,7 +109,7 @@ class MainAdapter @Inject constructor(_context:Context, dataFragment: DataCourse
 
             }else{
 
-               // graph.visibility = View.GONE
+                graph.visibility = View.GONE
             }
 
 

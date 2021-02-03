@@ -2,6 +2,7 @@ package com.viktor.kh.dev.exchangerates.di
 
 import com.viktor.kh.dev.exchangerates.ui.MainActivity
 import com.viktor.kh.dev.exchangerates.adapters.MainAdapter
+import com.viktor.kh.dev.exchangerates.graph.Graph
 import com.viktor.kh.dev.exchangerates.presenters.MainPresenter
 import com.viktor.kh.dev.exchangerates.repository.Repository
 import com.viktor.kh.dev.exchangerates.services.network.NetworkService
@@ -19,4 +20,5 @@ interface Component {
     fun inject(coursesFragment: CoursesFragment)
     fun inject(mainAdapter: MainAdapter)
     fun inject(repository : Repository)
+    fun inject(graph: Graph)
 }

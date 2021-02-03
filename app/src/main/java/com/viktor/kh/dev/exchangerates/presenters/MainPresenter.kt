@@ -6,6 +6,7 @@ import com.viktor.kh.dev.exchangerates.R
 import com.viktor.kh.dev.exchangerates.data.CurrencyPojo
 import com.viktor.kh.dev.exchangerates.data.DataCourses
 import com.viktor.kh.dev.exchangerates.data.ExchangeRate
+import com.viktor.kh.dev.exchangerates.data.GraphData
 import com.viktor.kh.dev.exchangerates.di.App
 import com.viktor.kh.dev.exchangerates.graph.Graph
 import com.viktor.kh.dev.exchangerates.repository.Repository
@@ -157,7 +158,18 @@ class MainPresenter @Inject constructor() {
 
     }
 
-    fun setGraph(graph:Graph,currencyName: String) {
+    fun setGraph(graphList: List<GraphData>,currencyName: String) {
+        val map = mutableMapOf<String,List<GraphData>>()
+        if (dataFragment.graphData!=null){
+            for (i in dataFragment.graphData!!){
+                map.put(i.key,i.value)
+            }
+        }
+
+        map.put(currencyName,graphList)
+        val data = dataFragment
+
+        dataFragment = DataCourses(data.date,currencyName,map,data.exchangeRates)
         updateList()
     }
 
